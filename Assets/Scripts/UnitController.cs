@@ -5,6 +5,12 @@ public class UnitController : MonoBehaviour
     private Vector3 offset;
     private bool isDragging = false;
     private Tile currentTile = null;
+
+    void Start()
+    {
+        currentTile = FindNearestTile();
+        if (currentTile != null) currentTile.canSpawn = false;
+    }
     
     void Update()
     {
@@ -41,6 +47,7 @@ public class UnitController : MonoBehaviour
         {
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
+                if (currentTile != null) currentTile.canSpawn = true;
                 offset = transform.position - pointerPosition;
                 isDragging = true;
             }
@@ -72,32 +79,41 @@ public class UnitController : MonoBehaviour
         }
         return Vector3.zero;
     }
-
-    void SnapToNearestTile()
-    {
-        Vector3 currentPosition = transform.position;
-        Tile[] allTiles = FindObjectsOfType<Tile>();
     
+    Tile FindNearestTile()
+    {
+        Tile[] allTiles = FindObjectsOfType<Tile>();
         Tile nearestTile = null;
         float minDistance = Mathf.Infinity;
-
+    
         foreach (Tile tile in allTiles)
         {
-            float distance = Vector3.Distance(currentPosition, tile.transform.position);
+            float distance = Vector3.Distance(transform.position, tile.transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;
                 nearestTile = tile;
             }
         }
-    
-        if (nearestTile != null)
-        {
-            transform.position = new Vector3(nearestTile.transform.position.x, currentPosition.y, nearestTile.transform.position.z);
-            nearestTile.canSpawn = false;
-            if (currentTile != null) currentTile.canSpawn = true;
-            currentTile = nearestTile;
-        }
+        return nearestTile;
     }
 
+    void SnapToNearestTile()
+    {
+        Tile nearestTile = FindNearestTile();
+        if (nearestTile != null && nearestTile.canSpawn)
+        {
+            transform.position = new Vector3(nearestTile.transform.position.x, transform.position.y, nearestTile.transform.position.z);
+            if (currentTile != null)
+            {
+                currentTile.canSpawn = true;
+            }
+            nearestTile.canSpawn = false;
+            currentTile = nearestTile;
+        }
+        else
+        {
+            transform.position = new Vector3(currentTile.transform.position.x, transform.position.y, currentTile.transform.position.z);
+        }
+    }
 }
