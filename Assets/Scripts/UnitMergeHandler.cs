@@ -2,29 +2,27 @@ using UnityEngine;
 
 public class UnitMergeHandler : MonoBehaviour
 {
-    public void CheckForMerge()
+    public static UnitMergeHandler Instance;
+
+    private void Awake()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.5f);
-        foreach (Collider hitCollider in hitColliders)
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    public bool TryMergeUnits(UnitDragHandler unitA, UnitDragHandler unitB)
+    {
+        if (unitA.unitType == unitB.unitType && unitA.unitLevel == unitB.unitLevel)
         {
-            Unit otherUnit = hitCollider.GetComponent<Unit>();
-            if (otherUnit != null && otherUnit != GetComponent<Unit>() && CanMergeWith(otherUnit))
-            {
-                MergeWith(otherUnit);
-                break;
-            }
+            MergeUnits(unitA, unitB);
+            return true;
         }
+        return false;
     }
 
-    bool CanMergeWith(Unit otherUnit)
+    private void MergeUnits(UnitDragHandler unitA, UnitDragHandler unitB)
     {
-        Unit currentUnit = GetComponent<Unit>();
-        return otherUnit.unitType == currentUnit.unitType && otherUnit.level == currentUnit.level;
-    }
-
-    void MergeWith(Unit otherUnit)
-    {
-        GetComponent<Unit>().LevelUp();
-        Destroy(otherUnit.gameObject);
+        unitA.UpgradeUnit();
+        Destroy(unitB.gameObject);
     }
 }

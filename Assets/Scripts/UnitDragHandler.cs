@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class UnitDragHandler : MonoBehaviour
 {
+    [SerializeField] GameObject[] unitModels;
+    public int unitLevel = 1;
+    public string unitType;
+    
     private Vector3 offset;
     private bool isDragging = false;
     private Tile currentTile = null;
+    private GameObject currentModel;
 
     void Start()
     {
@@ -84,18 +89,46 @@ public class UnitDragHandler : MonoBehaviour
     void SnapToNearestTile()
     {
         Tile nearestTile = FindNearestTile();
-        if (nearestTile != null && nearestTile.canSpawn)
+        if (nearestTile != null)
         {
-            transform.position = new Vector3(nearestTile.transform.position.x, transform.position.y, nearestTile.transform.position.z);
-            if (currentTile != null) currentTile.canSpawn = true;
-            nearestTile.canSpawn = false;
-            currentTile = nearestTile;
+            UnitDragHandler otherUnit = nearestTile.GetUnit();
+            if (otherUnit != null && UnitMergeHandler.Instance.TryMergeUnits(this, otherUnit))
+            {
+                return;
+            }
 
-            GetComponent<UnitMergeHandler>().CheckForMerge();
+            if (nearestTile.canSpawn)
+            {
+                transform.position = new Vector3(nearestTile.transform.position.x, transform.position.y, nearestTile.transform.position.z);
+            
+                if (currentTile != null) currentTile.SetUnit(null);
+                nearestTile.SetUnit(this);
+                currentTile = nearestTile;
+            }
+            else
+            {
+                transform.position = new Vector3(currentTile.transform.position.x, transform.position.y, currentTile.transform.position.z);
+            }
         }
-        else
+    }
+    
+    public void UpgradeUnit()
+    {
+        unitLevel++;
+        SetUnitModel(unitLevel);
+    }
+
+    void SetUnitModel(int level)
+    {
+        if (currentModel != null)
         {
-            transform.position = new Vector3(currentTile.transform.position.x, transform.position.y, currentTile.transform.position.z);
+            Destroy(currentModel);
+        }
+
+        if (level - 1 < unitModels.Length)
+        {
+            currentModel = Instantiate(unitModels[level - 1], transform.position, Quaternion.identity, transform);
+            currentModel.transform.localPosition = Vector3.zero;
         }
     }
 }
