@@ -125,10 +125,12 @@ public class UnitDragHandler : MonoBehaviour
             Destroy(currentModel);
         }
 
-        if (level - 1 < unitModels.Length)
+        if (level - 1 < unitModels.Length && currentTile != null)
         {
-            currentModel = Instantiate(unitModels[level - 1], transform.position, Quaternion.identity, transform);
+            currentModel = Instantiate(unitModels[level - 1], currentTile.transform.position, Quaternion.identity);
+            currentModel.transform.SetParent(transform);
             currentModel.transform.localPosition = Vector3.zero;
         }
     }
+
 }
