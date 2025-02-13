@@ -1171,9 +1171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9b8bb93a4889c459c6dbd1fb84a665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warriorPrefab: {fileID: 32071719224507773, guid: 52066e137447bf540a7f273bfa108141,
+  warriorPrefab: {fileID: 360627156883349816, guid: a356b95fb29b8d249b9d0af8e6c9669d,
     type: 3}
-  archerPrefab: {fileID: 360627156883349816, guid: a356b95fb29b8d249b9d0af8e6c9669d,
+  archerPrefab: {fileID: 32071719224507773, guid: 52066e137447bf540a7f273bfa108141,
     type: 3}
   warriorButton: {fileID: 2114579151}
   archerButton: {fileID: 460133907}
@@ -3462,6 +3462,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363849327}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1376319985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1376319987}
+  - component: {fileID: 1376319986}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1376319986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376319985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37dab2a466c545e4b8815d3a5680f9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1376319987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376319985}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1503790250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5160,3 +5204,4 @@ SceneRoots:
   - {fileID: 1189541653}
   - {fileID: 2134774076}
   - {fileID: 375351633}
+  - {fileID: 1376319987}

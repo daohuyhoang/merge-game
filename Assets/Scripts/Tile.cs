@@ -8,10 +8,8 @@ public class Tile : MonoBehaviour
     public void SetUnit(UnitDragHandler unit)
     {
         currentUnit = unit;
+        canSpawn = unit == null;
     }
 
-    public UnitDragHandler GetUnit()
-    {
-        return currentUnit;
-    }
+    public UnitDragHandler GetUnit() => currentUnit;
 }

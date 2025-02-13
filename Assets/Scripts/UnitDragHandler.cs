@@ -1,26 +1,24 @@
 using UnityEngine;
 
+[RequireComponent(typeof(UnitModelHandler))]
 public class UnitDragHandler : MonoBehaviour
 {
-    [SerializeField] GameObject[] unitModels;
     public int unitLevel = 1;
     public string unitType;
-    
+
     private Vector3 offset;
     private bool isDragging = false;
-    private Tile currentTile = null;
-    private GameObject currentModel;
+    public Tile currentTile = null;
+    private UnitModelHandler modelHandler;
 
     void Start()
     {
+        modelHandler = GetComponent<UnitModelHandler>();
         currentTile = FindNearestTile();
         if (currentTile != null) currentTile.canSpawn = false;
     }
 
-    void Update()
-    {
-        HandleMouseInput();
-    }
+    void Update() => HandleMouseInput();
 
     void HandleMouseInput()
     {
@@ -43,10 +41,7 @@ public class UnitDragHandler : MonoBehaviour
         }
     }
 
-    void OnPointerDrag(Vector3 pointerPosition)
-    {
-        transform.position = pointerPosition + offset;
-    }
+    void OnPointerDrag(Vector3 pointerPosition) => transform.position = pointerPosition + offset;
 
     void OnPointerUp()
     {
@@ -61,10 +56,7 @@ public class UnitDragHandler : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        if (groundPlane.Raycast(ray, out float distance))
-        {
-            return ray.GetPoint(distance);
-        }
+        if (groundPlane.Raycast(ray, out float distance)) return ray.GetPoint(distance);
         return Vector3.zero;
     }
 
@@ -92,7 +84,10 @@ public class UnitDragHandler : MonoBehaviour
         if (nearestTile != null)
         {
             UnitDragHandler otherUnit = nearestTile.GetUnit();
-            if (otherUnit != null && UnitMergeHandler.Instance.TryMergeUnits(this, otherUnit))
+            if (otherUnit != null && 
+                otherUnit.unitType == this.unitType &&
+                otherUnit.unitLevel == this.unitLevel &&
+                UnitMergeHandler.Instance.TryMergeUnits(this, otherUnit))
             {
                 return;
             }
@@ -111,26 +106,4 @@ public class UnitDragHandler : MonoBehaviour
             }
         }
     }
-    
-    public void UpgradeUnit()
-    {
-        unitLevel++;
-        SetUnitModel(unitLevel);
-    }
-
-    void SetUnitModel(int level)
-    {
-        if (currentModel != null)
-        {
-            Destroy(currentModel);
-        }
-
-        if (level - 1 < unitModels.Length && currentTile != null)
-        {
-            currentModel = Instantiate(unitModels[level - 1], currentTile.transform.position, Quaternion.identity);
-            currentModel.transform.SetParent(transform);
-            currentModel.transform.localPosition = Vector3.zero;
-        }
-    }
-
 }
