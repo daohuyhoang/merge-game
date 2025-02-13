@@ -80,7 +80,6 @@ public class UnitDragHandler : MonoBehaviour
     void SnapToNearestTile()
     {
         Tile nearestTile = FindNearestTile();
-        Debug.Log(nearestTile);
         if (nearestTile != null)
         {
             UnitDragHandler otherUnit = nearestTile.GetUnit();

@@ -28,16 +28,14 @@ public class UnitMergeHandler : MonoBehaviour
             Vector3 mergePosition = unitB.transform.position;
             int newLevel = unitA.unitLevel + 1;
             GameObject newUnitObject = unitA.GetComponent<UnitModelHandler>().CreateHigherLevelUnit(newLevel, mergePosition);
-            Debug.Log(newLevel);
-            Debug.Log(unitA.unitLevel);
             if (newUnitObject != null)
             {
                 UnitDragHandler newUnit = newUnitObject.GetComponent<UnitDragHandler>();
                 newUnit.unitLevel = newLevel;
                 newUnit.unitType = unitA.unitType;
-                // newUnit.GetComponent<UnitModelHandler>().SetUnitModel(newLevel);
-                newUnit.currentTile = unitA.currentTile;
-                unitA.currentTile.SetUnit(newUnit);
+                newUnit.currentTile = unitB.currentTile;
+                unitB.currentTile.SetUnit(newUnit);
+
                 if (unitA.currentTile != null)
                 {
                     unitA.currentTile.SetUnit(null);
@@ -46,7 +44,7 @@ public class UnitMergeHandler : MonoBehaviour
 
                 if (unitB.currentTile != null)
                 {
-                    unitB.currentTile.SetUnit(null);
+                    unitB.currentTile.SetUnit(newUnit);
                     unitB.currentTile.canSpawn = false;
                 }
                 
