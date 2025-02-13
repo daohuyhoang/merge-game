@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitLevel: 2
   unitType: Archer
+  currentTile: {fileID: 0}
 --- !u!114 &5869879564723214476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,3 +117,4 @@ MonoBehaviour:
   unitModels:
   - {fileID: 32071719224507773, guid: 52066e137447bf540a7f273bfa108141, type: 3}
   - {fileID: 32071719224507773}
+  - {fileID: 32071719224507773, guid: 6a89926cd2b380445b7e198d5a83467d, type: 3}

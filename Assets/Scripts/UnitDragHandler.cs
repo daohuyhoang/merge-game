@@ -34,7 +34,6 @@ public class UnitDragHandler : MonoBehaviour
         {
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
-                if (currentTile != null) currentTile.canSpawn = true;
                 offset = transform.position - pointerPosition;
                 isDragging = true;
             }
@@ -81,6 +80,7 @@ public class UnitDragHandler : MonoBehaviour
     void SnapToNearestTile()
     {
         Tile nearestTile = FindNearestTile();
+        Debug.Log(nearestTile);
         if (nearestTile != null)
         {
             UnitDragHandler otherUnit = nearestTile.GetUnit();

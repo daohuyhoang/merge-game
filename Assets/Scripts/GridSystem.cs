@@ -22,8 +22,22 @@ public class GridSystem : MonoBehaviour
             if (tile.canSpawn)
             {
                 Vector3 spawnPosition = tile.transform.position + Vector3.up * 3.4f;
-                Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
-                tile.canSpawn = false;
+                GameObject unitObject = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
+
+                UnitDragHandler unit = unitObject.GetComponent<UnitDragHandler>();
+                if (unit != null)
+                {
+                    unit.currentTile = tile;
+                    tile.SetUnit(unit);
+                    tile.canSpawn = false;
+                }
+                UnitDragHandler otherUnit = tile.GetUnit();
+                if (otherUnit != null && otherUnit != unit && 
+                    otherUnit.unitType == unit.unitType && 
+                    otherUnit.unitLevel == unit.unitLevel)
+                {
+                    UnitMergeHandler.Instance.TryMergeUnits(unit, otherUnit);
+                }
                 break;
             }
         }
