@@ -23,7 +23,7 @@ public class UnitMergeHandler : MonoBehaviour
 
     private void MergeUnits(Unit unitA, Unit unitB)
     {
-        if (unitA.UnitLevel == unitB.UnitLevel)
+        if (unitA.UnitLevel == unitB.UnitLevel && unitA.UnitType == unitB.UnitType)
         {
             Vector3 mergePosition = unitB.transform.position;
             int newLevel = unitA.UnitLevel + 1;
@@ -32,7 +32,6 @@ public class UnitMergeHandler : MonoBehaviour
             {
                 Unit newUnit = newUnitObject.GetComponent<Unit>();
                 newUnit.UnitLevel = newLevel;
-                newUnit.UnitType = unitA.UnitType;
                 newUnit.CurrentTile = unitB.CurrentTile;
                 unitB.CurrentTile.SetUnit(newUnit);
 

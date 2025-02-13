@@ -1,10 +1,18 @@
 using UnityEngine;
 
-[RequireComponent(typeof(UnitModelHandler))]
 public class Unit : MonoBehaviour
 {
+    public enum UnitTypeEnum
+    {
+        Warrior,
+        Archer
+    }
+
+    [SerializeField] private UnitTypeEnum unitType = UnitTypeEnum.Warrior;
+
+    public string UnitType => unitType.ToString();
+
     public int UnitLevel { get; set; } = 1;
-    public string UnitType { get; set; }
     public Tile CurrentTile { get; set; }
 
     private UnitModelHandler modelHandler;
