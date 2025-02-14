@@ -8,6 +8,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 116786313304372320, guid: f66036dd1148f704ea273e95584ad7ba,
+        type: 3}
+      propertyPath: unitType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 468313094300786796, guid: f66036dd1148f704ea273e95584ad7ba,
+        type: 3}
+      propertyPath: unitModels.Array.data[0]
+      value: 
+      objectReference: {fileID: 32071719224507773, guid: 52066e137447bf540a7f273bfa108141,
+        type: 3}
+    - target: {fileID: 468313094300786796, guid: f66036dd1148f704ea273e95584ad7ba,
+        type: 3}
+      propertyPath: unitModels.Array.data[2]
+      value: 
+      objectReference: {fileID: 32071719224507773}
     - target: {fileID: 1811303422207214838, guid: f66036dd1148f704ea273e95584ad7ba,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -71,15 +87,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2035114114629382959, guid: f66036dd1148f704ea273e95584ad7ba,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 315492199884931672}
-    - targetCorrespondingSourceObject: {fileID: 2035114114629382959, guid: f66036dd1148f704ea273e95584ad7ba,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5869879564723214476}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f66036dd1148f704ea273e95584ad7ba, type: 3}
 --- !u!1 &32071719224507773 stripped
 GameObject:
@@ -87,34 +95,3 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2040091659477732946}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &315492199884931672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32071719224507773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0390741a574c8964eaaaddf8d5aa1040, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitLevel: 3
-  unitType: Archer
-  currentTile: {fileID: 0}
---- !u!114 &5869879564723214476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32071719224507773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e13ebbf80d060b498f415698a0b57be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitModels:
-  - {fileID: 32071719224507773, guid: 52066e137447bf540a7f273bfa108141, type: 3}
-  - {fileID: 32071719224507773, guid: a0f8a82e2ec94054e808c6eabd0d9f6c, type: 3}
-  - {fileID: 32071719224507773}
