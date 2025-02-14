@@ -13,15 +13,27 @@ public class Unit : MonoBehaviour
     public string UnitType => unitType.ToString();
 
     public int UnitLevel { get; set; } = 1;
+    public int HP { get; private set; }
+    public int ATK { get; private set; }
     public Tile CurrentTile { get; set; }
 
-    private UnitModelHandler modelHandler;
+    [SerializeField] private UnitData unitData;
 
     private void Start()
     {
-        modelHandler = GetComponent<UnitModelHandler>();
+        UpdateStats();
+        DisplayUnitInfo();
         CurrentTile = FindNearestTile();
         if (CurrentTile != null) CurrentTile.CanSpawn = false;
+    }
+
+    public void UpdateStats()
+    {
+        if (unitData != null && UnitLevel <= unitData.maxLevel)
+        {
+            HP = unitData.hpByLevel[UnitLevel - 1];
+            ATK = unitData.atkByLevel[UnitLevel - 1];
+        }
     }
 
     public Tile FindNearestTile()
@@ -40,5 +52,10 @@ public class Unit : MonoBehaviour
             }
         }
         return nearestTile;
+    }
+    
+    public void DisplayUnitInfo()
+    {
+        Debug.Log($"Unit: {unitData.unitType}, Level: {UnitLevel}, HP: {HP}, ATK: {ATK}");
     }
 }

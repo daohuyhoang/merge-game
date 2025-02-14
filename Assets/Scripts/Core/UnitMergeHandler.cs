@@ -32,6 +32,7 @@ public class UnitMergeHandler : MonoBehaviour
             {
                 Unit newUnit = newUnitObject.GetComponent<Unit>();
                 newUnit.UnitLevel = newLevel;
+                newUnit.UpdateStats();
                 newUnit.CurrentTile = unitB.CurrentTile;
                 unitB.CurrentTile.SetUnit(newUnit);
 
