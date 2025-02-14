@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd686f93a6177924da659a566be0e1bc, type: 3}
+  m_Name: ArcherData
+  m_EditorClassIdentifier: 
+  unitName: Archer
+  unitType: 1
+  maxLevel: 10
+  hpByLevel: 0a00000018000000340000007800000018010000a8020000dc05000060090000841c0000803e0000
+  atkByLevel: 040000000a00000017000000360000008000000030010000bc020000720600006e0f0000ea240000
