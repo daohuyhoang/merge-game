@@ -21,8 +21,9 @@ public class GridSystem : MonoBehaviour
         {
             if (tile.CanSpawn)
             {
-                Vector3 spawnPosition = tile.transform.position + Vector3.up * 3.4f;
-                GameObject unitObject = Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
+                Vector3 spawnPosition = tile.transform.position + Vector3.up * 1.7f;
+                Quaternion rotation = Quaternion.Euler(0, 180, 0);
+                GameObject unitObject = Instantiate(unitPrefab, spawnPosition, rotation);
 
                 Unit unit = unitObject.GetComponent<Unit>();
                 if (unit != null)
