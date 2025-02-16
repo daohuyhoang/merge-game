@@ -18,11 +18,12 @@ public class Unit : MonoBehaviour
     public Tile CurrentTile { get; set; }
 
     [SerializeField] private UnitData unitData;
-    [SerializeField] private float attackRange = 2f; // Tầm đánh
-    [SerializeField] private float moveSpeed = 3f; // Tốc độ di chuyển
+    [SerializeField] private float attackRange = 2f;
+    [SerializeField] private float moveSpeed = 3f;
 
     private Unit targetUnit;
     private bool isAttacking = false;
+    private Animator animator;
 
     private void Start()
     {
@@ -30,6 +31,8 @@ public class Unit : MonoBehaviour
         DisplayUnitInfo();
         CurrentTile = FindNearestTile();
         if (CurrentTile != null) CurrentTile.CanSpawn = false;
+        
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -83,7 +86,7 @@ public class Unit : MonoBehaviour
 
     public void DisplayUnitInfo()
     {
-        Debug.Log($"Unit: {unitData.unitType}, Level: {UnitLevel}, HP: {HP}, ATK: {ATK}");
+        Debug.Log($"Unit: {unitData.unitType}, Level: {UnitLevel}, HP: {HP}, ATK: {ATK}, Tag: {gameObject.tag}");
     }
 
     public void FindTarget()
@@ -94,7 +97,7 @@ public class Unit : MonoBehaviour
 
         foreach (Unit unit in allUnits)
         {
-            if (unit == this || unit.UnitType == this.UnitType) continue;
+            if (unit == this || unit.CompareTag(gameObject.tag)) continue;
 
             float distance = Vector3.Distance(transform.position, unit.transform.position);
             if (distance < shortestDistance)
@@ -110,6 +113,8 @@ public class Unit : MonoBehaviour
     public void MoveTowardsTarget()
     {
         if (targetUnit == null) return;
+        
+        if (animator != null) animator.SetBool("Run", true);
 
         Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
@@ -125,6 +130,9 @@ public class Unit : MonoBehaviour
         if (targetUnit == null || isAttacking) return;
 
         isAttacking = true;
+        
+        if (animator != null) animator.SetTrigger("Attack");
+        
         Invoke("DealDamage", 1f);
     }
 
@@ -135,10 +143,13 @@ public class Unit : MonoBehaviour
             targetUnit.TakeDamage(ATK);
         }
         isAttacking = false;
+        
+        if (animator != null) animator.SetBool("Run", false);
     }
 
     public void TakeDamage(int damage)
     {
+        Debug.Log($"Hp: {HP}");
         HP -= damage;
         if (HP <= 0)
         {
@@ -153,6 +164,8 @@ public class Unit : MonoBehaviour
             CurrentTile.SetUnit(null);
             CurrentTile.CanSpawn = true;
         }
-        Destroy(gameObject);
+        
+        if (animator != null) animator.SetTrigger("Die");
+        // Destroy(gameObject);
     }
 }
