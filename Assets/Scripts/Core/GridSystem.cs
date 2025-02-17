@@ -8,13 +8,15 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private Button warriorButton;
     [SerializeField] private Button archerButton;
 
+    private string TEAM_TAG = "Player";
+
     private void Start()
     {
-        warriorButton.onClick.AddListener(() => SpawnUnit(warriorPrefab));
-        archerButton.onClick.AddListener(() => SpawnUnit(archerPrefab));
+        warriorButton.onClick.AddListener(() => SpawnUnit(warriorPrefab, TEAM_TAG));
+        archerButton.onClick.AddListener(() => SpawnUnit(archerPrefab, TEAM_TAG));
     }
 
-    private void SpawnUnit(GameObject unitPrefab)
+    private void SpawnUnit(GameObject unitPrefab, string teamTag)
     {
         Tile[] spawnableTiles = FindObjectsOfType<Tile>();
         foreach (Tile tile in spawnableTiles)
@@ -31,6 +33,7 @@ public class GridSystem : MonoBehaviour
                     unit.CurrentTile = tile;
                     tile.SetUnit(unit);
                     tile.CanSpawn = false;
+                    unitObject.tag = teamTag;
                 }
 
                 Unit otherUnit = tile.GetUnit();

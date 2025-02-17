@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 7152135254628043492}
   m_Layer: 0
   m_Name: Archer Lv1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -361,6 +361,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   unitData: {fileID: 11400000, guid: cedebb856fd266c49b7b005fc60c304c, type: 2}
+  attackRange: 50
+  moveSpeed: 3
 --- !u!114 &-3152641982979799619
 MonoBehaviour:
   m_ObjectHideFlags: 0
