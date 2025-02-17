@@ -39,22 +39,16 @@ public class Unit : MonoBehaviour
     {
         if (BattleManager.Instance != null && BattleManager.Instance.IsBattleActive())
         {
-            if (targetUnit == null)
+            FindTarget();
+            if (unitType == UnitTypeEnum.Warrior)
             {
-                FindTarget();
+                MoveTowardsTarget();
             }
-            else
+            else if (unitType == UnitTypeEnum.Archer)
             {
-                if (unitType == UnitTypeEnum.Warrior)
+                if (Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
                 {
-                    MoveTowardsTarget();
-                }
-                else if (unitType == UnitTypeEnum.Archer)
-                {
-                    if (Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
-                    {
-                        Attack();
-                    }
+                    Attack();
                 }
             }
         }
@@ -110,7 +104,10 @@ public class Unit : MonoBehaviour
             }
         }
 
-        targetUnit = nearestUnit;
+        if (nearestUnit != null && (targetUnit == null || shortestDistance < Vector3.Distance(transform.position, targetUnit.transform.position)))
+        {
+            targetUnit = nearestUnit;
+        }
     }
 
     public void MoveTowardsTarget()
