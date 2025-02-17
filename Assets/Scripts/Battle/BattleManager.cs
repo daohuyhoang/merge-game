@@ -3,6 +3,10 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
+    
+    private bool isBattleActive = false;
+    
+    public bool IsBattleActive() => isBattleActive;
 
     private void Awake()
     {
@@ -12,10 +16,15 @@ public class BattleManager : MonoBehaviour
 
     public void StartBattle()
     {
-        Unit[] allUnits = FindObjectsOfType<Unit>();
-        foreach (Unit unit in allUnits)
+        if (!isBattleActive)
         {
-            unit.FindTarget();
+            isBattleActive = true;
+            Unit[] allUnits = FindObjectsOfType<Unit>();
+            
+            foreach (Unit unit in allUnits)
+            {
+                unit.FindTarget();
+            }
         }
     }
 }

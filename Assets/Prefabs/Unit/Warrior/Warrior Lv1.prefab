@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 0
   unitData: {fileID: 11400000, guid: 4c8348f425b253d4aa9cee11c2b0503e, type: 2}
-  attackRange: 2
+  attackRange: 1
   moveSpeed: 3
 --- !u!114 &-1365244981288088867
 MonoBehaviour:

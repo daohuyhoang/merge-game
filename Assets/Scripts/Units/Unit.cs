@@ -37,21 +37,24 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        if (targetUnit == null)
+        if (BattleManager.Instance != null && BattleManager.Instance.IsBattleActive())
         {
-            FindTarget();
-        }
-        else
-        {
-            if (unitType == UnitTypeEnum.Warrior)
+            if (targetUnit == null)
             {
-                MoveTowardsTarget();
+                FindTarget();
             }
-            else if (unitType == UnitTypeEnum.Archer)
+            else
             {
-                if (Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
+                if (unitType == UnitTypeEnum.Warrior)
                 {
-                    Attack();
+                    MoveTowardsTarget();
+                }
+                else if (unitType == UnitTypeEnum.Archer)
+                {
+                    if (Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
+                    {
+                        Attack();
+                    }
                 }
             }
         }
@@ -112,28 +115,47 @@ public class Unit : MonoBehaviour
 
     public void MoveTowardsTarget()
     {
-        if (targetUnit == null) return;
-        
+        if (targetUnit == null || isAttacking) return;
+
+        float distanceToTarget = Vector3.Distance(transform.position, targetUnit.transform.position);
+
+        if (distanceToTarget <= attackRange)
+        {
+            if (animator != null) animator.SetBool("Run", false);
+            LookAtTarget();
+            Attack();
+            return;
+        }
+
         if (animator != null) animator.SetBool("Run", true);
+        
+        LookAtTarget();
 
         Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
-
-        if (Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
-        {
-            Attack();
-        }
     }
+
 
     public void Attack()
     {
         if (targetUnit == null || isAttacking) return;
-
         isAttacking = true;
+        
+        LookAtTarget();
         
         if (animator != null) animator.SetTrigger("Attack");
         
         Invoke("DealDamage", 1f);
+    }
+    
+    private void LookAtTarget()
+    {
+        if (targetUnit != null)
+        {
+            Vector3 direction = targetUnit.transform.position - transform.position;
+            direction.y = 0;
+            transform.rotation = Quaternion.LookRotation(direction);   
+        }
     }
 
     private void DealDamage()
@@ -166,6 +188,6 @@ public class Unit : MonoBehaviour
         }
         
         if (animator != null) animator.SetTrigger("Die");
-        // Destroy(gameObject);
+        Destroy(gameObject, 2f);
     }
 }
