@@ -186,9 +186,13 @@ public class Unit : MonoBehaviour
 
     private void DealDamage()
     {
-        if (targetUnit != null)
+        if (targetUnit != null && targetUnit.HP > 0)
         {
             targetUnit.TakeDamage(ATK);
+        }
+        else
+        {
+            targetUnit = null;
         }
         isAttacking = false;
         
