@@ -3,6 +3,8 @@ using UnityEngine;
 public class UnitMergeHandler : MonoBehaviour
 {
     public static UnitMergeHandler Instance;
+    
+    private string TEAM_TAG = "Player";
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class UnitMergeHandler : MonoBehaviour
             {
                 Unit newUnit = newUnitObject.GetComponent<Unit>();
                 newUnit.UnitLevel = newLevel;
+                newUnit.tag = TEAM_TAG;
                 newUnit.UpdateStats();
                 newUnit.CurrentTile = unitB.CurrentTile;
                 unitB.CurrentTile.SetUnit(newUnit);

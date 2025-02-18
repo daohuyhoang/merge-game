@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 6464717879442808101}
   m_Layer: 0
   m_Name: Warrior Lv2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -673,7 +673,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: 0
+  unitLevel: 2
   unitData: {fileID: 11400000, guid: 4c8348f425b253d4aa9cee11c2b0503e, type: 2}
+  attackRange: 1
+  moveSpeed: 5
 --- !u!114 &3945532005417460558
 MonoBehaviour:
   m_ObjectHideFlags: 0

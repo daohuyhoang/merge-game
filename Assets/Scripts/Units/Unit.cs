@@ -12,7 +12,13 @@ public class Unit : MonoBehaviour
 
     public string UnitType => unitType.ToString();
 
-    public int UnitLevel { get; set; } = 1;
+    [SerializeField] private int unitLevel;
+    public int UnitLevel 
+    {
+        get { return unitLevel; }
+        set { unitLevel = value; }
+    }
+
     public int HP { get; private set; }
     public int ATK { get; private set; }
     public Tile CurrentTile { get; set; }
@@ -35,6 +41,26 @@ public class Unit : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    private void CheckForVictory()
+    {
+        Unit[] allUnits = FindObjectsOfType<Unit>();
+        bool hasEnemy = false;
+
+        foreach (Unit unit in allUnits)
+        {
+            if (!unit.CompareTag(gameObject.tag) && unit.HP > 0)
+            {
+                hasEnemy = true;
+                break;
+            }
+        }
+
+        if (!hasEnemy)
+        {
+            VictoryAnimtation();
+        }
+    }
+
     private void Update()
     {
         if (BattleManager.Instance != null && BattleManager.Instance.IsBattleActive())
@@ -46,11 +72,13 @@ public class Unit : MonoBehaviour
             }
             else if (unitType == UnitTypeEnum.Archer)
             {
-                if (Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
+                if (targetUnit != null && Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
                 {
                     Attack();
                 }
             }
+
+            CheckForVictory();
         }
     }
 
@@ -94,8 +122,7 @@ public class Unit : MonoBehaviour
 
         foreach (Unit unit in allUnits)
         {
-            if (unit == this || unit.CompareTag(gameObject.tag)) continue;
-
+            if (unit == this || unit.CompareTag(gameObject.tag) || unit.HP <= 0) continue;
             float distance = Vector3.Distance(transform.position, unit.transform.position);
             if (distance < shortestDistance)
             {
@@ -103,6 +130,8 @@ public class Unit : MonoBehaviour
                 nearestUnit = unit;
             }
         }
+        
+        if (targetUnit != null && targetUnit.HP <= 0) targetUnit = null;
 
         if (nearestUnit != null && (targetUnit == null || shortestDistance < Vector3.Distance(transform.position, targetUnit.transform.position)))
         {
@@ -113,18 +142,19 @@ public class Unit : MonoBehaviour
     public void MoveTowardsTarget()
     {
         if (targetUnit == null || isAttacking) return;
-
         float distanceToTarget = Vector3.Distance(transform.position, targetUnit.transform.position);
 
         if (distanceToTarget <= attackRange)
         {
-            if (animator != null) animator.SetBool("Run", false);
+            animator.SetBool("Run", false);
+            animator.SetBool("Attack", true);
             LookAtTarget();
             Attack();
             return;
         }
 
-        if (animator != null) animator.SetBool("Run", true);
+        animator.SetBool("Run", true);
+        animator.SetBool("Attack", false);
         
         LookAtTarget();
 
@@ -132,10 +162,9 @@ public class Unit : MonoBehaviour
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
-
     public void Attack()
     {
-        if (targetUnit == null || isAttacking) return;
+        if (targetUnit == null || targetUnit.HP <= 0 || isAttacking) return;
         isAttacking = true;
         
         LookAtTarget();
@@ -151,7 +180,7 @@ public class Unit : MonoBehaviour
         {
             Vector3 direction = targetUnit.transform.position - transform.position;
             direction.y = 0;
-            transform.rotation = Quaternion.LookRotation(direction);   
+            transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 
@@ -163,11 +192,13 @@ public class Unit : MonoBehaviour
         }
         isAttacking = false;
         
-        if (animator != null) animator.SetBool("Run", false);
+        // if (animator != null) animator.SetBool("Run", false);
     }
 
     public void TakeDamage(int damage)
     {
+        if (HP <= 0) return;
+        
         Debug.Log($"Hp: {HP}");
         HP -= damage;
         if (HP <= 0)
@@ -185,6 +216,12 @@ public class Unit : MonoBehaviour
         }
         
         if (animator != null) animator.SetTrigger("Die");
-        Destroy(gameObject, 2f);
+        this.enabled = false;
     }
+    
+    public void VictoryAnimtation()
+    {
+        if (animator != null) animator.SetTrigger("Victory");
+    }
+    
 }
