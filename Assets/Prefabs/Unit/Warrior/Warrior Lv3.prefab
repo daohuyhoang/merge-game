@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 8622875154934836286}
   m_Layer: 0
   m_Name: Warrior Lv3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -198,7 +198,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitType: 0
+  unitLevel: 3
   unitData: {fileID: 11400000, guid: 4c8348f425b253d4aa9cee11c2b0503e, type: 2}
+  attackRange: 1.5
+  moveSpeed: 5
 --- !u!114 &-1895856820290402146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,10 +249,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7303044
+  m_Radius: 0.9456831
   m_Height: 4.175442
   m_Direction: 1
-  m_Center: {x: -0.040218055, y: 1.8605182, z: 0}
+  m_Center: {x: 0.02, y: 1.72, z: 0.31}
 --- !u!1 &1476140188099483404
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour
 
     [SerializeField] private UnitTypeEnum unitType = UnitTypeEnum.Warrior;
 
-    public string UnitType => unitType.ToString();
+    public UnitTypeEnum UnitType => unitType;
 
     [SerializeField] private int unitLevel;
     public int UnitLevel 
@@ -58,6 +58,7 @@ public class Unit : MonoBehaviour
         if (!hasEnemy)
         {
             VictoryAnimtation();
+            UIManager.Instance.ShowVictoryPanel();
         }
     }
 
@@ -195,8 +196,6 @@ public class Unit : MonoBehaviour
             targetUnit = null;
         }
         isAttacking = false;
-        
-        // if (animator != null) animator.SetBool("Run", false);
     }
 
     public void TakeDamage(int damage)
@@ -220,6 +219,8 @@ public class Unit : MonoBehaviour
         }
         
         if (animator != null) animator.SetTrigger("Die");
+        
+        ObjectPool.Instance.ReturnToPool(UnitType, gameObject);
         this.enabled = false;
     }
     
@@ -227,5 +228,13 @@ public class Unit : MonoBehaviour
     {
         if (animator != null) animator.SetTrigger("Victory");
     }
-    
+
+    public void ResetUnit()
+    {
+        HP = unitData.hpByLevel[UnitLevel - 1];
+        ATK = unitData.atkByLevel[UnitLevel - 1];
+        isAttacking = false;
+        targetUnit = null;
+        animator.SetTrigger("Idle");
+    }
 }

@@ -45,15 +45,13 @@ public class UnitMergeHandler : MonoBehaviour
                     unitA.CurrentTile.SetUnit(null);
                     unitA.CurrentTile.CanSpawn = true;
                 }
-
+                ObjectPool.Instance.ReturnToPool(unitA.UnitType, unitA.gameObject);
                 if (unitB.CurrentTile != null)
                 {
                     unitB.CurrentTile.SetUnit(newUnit);
                     unitB.CurrentTile.CanSpawn = false;
                 }
-                
-                Destroy(unitA.gameObject);
-                Destroy(unitB.gameObject);
+                ObjectPool.Instance.ReturnToPool(unitA.UnitType, unitB.gameObject);
             }
         }
     }

@@ -12,11 +12,11 @@ public class GridSystem : MonoBehaviour
 
     private void Start()
     {
-        warriorButton.onClick.AddListener(() => SpawnUnit(warriorPrefab, TEAM_TAG));
-        archerButton.onClick.AddListener(() => SpawnUnit(archerPrefab, TEAM_TAG));
+        warriorButton.onClick.AddListener(() => SpawnUnit(Unit.UnitTypeEnum.Warrior, TEAM_TAG));
+        archerButton.onClick.AddListener(() => SpawnUnit(Unit.UnitTypeEnum.Archer, TEAM_TAG));
     }
 
-    private void SpawnUnit(GameObject unitPrefab, string teamTag)
+    private void SpawnUnit(Unit.UnitTypeEnum unitType, string teamTag)
     {
         Tile[] spawnableTiles = FindObjectsOfType<Tile>();
         foreach (Tile tile in spawnableTiles)
@@ -25,9 +25,10 @@ public class GridSystem : MonoBehaviour
             {
                 Vector3 spawnPosition = tile.transform.position + Vector3.up * 1.7f;
                 Quaternion rotation = Quaternion.Euler(0, 180, 0);
-                GameObject unitObject = Instantiate(unitPrefab, spawnPosition, rotation);
+                GameObject unitObject = ObjectPool.Instance.SpawnFromPool(unitType, spawnPosition, rotation);
 
                 Unit unit = unitObject.GetComponent<Unit>();
+                // unit.ResetUnit();
                 if (unit != null)
                 {
                     unit.CurrentTile = tile;
