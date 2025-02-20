@@ -25,34 +25,31 @@ public class UnitMergeHandler : MonoBehaviour
 
     private void MergeUnits(Unit unitA, Unit unitB)
     {
-        if (unitA.UnitLevel == unitB.UnitLevel && unitA.UnitType == unitB.UnitType)
+        Vector3 mergePosition = unitB.transform.position;
+        int newLevel = unitA.UnitLevel + 1;
+        Quaternion mergeRotation = Quaternion.Euler(0, 180, 0);
+        GameObject newUnitObject = ObjectPool.Instance.SpawnFromPool(unitA.UnitType, newLevel, mergePosition, mergeRotation);
+        if (newUnitObject != null)
         {
-            Vector3 mergePosition = unitB.transform.position;
-            int newLevel = unitA.UnitLevel + 1;
-            Quaternion mergeRotation = Quaternion.Euler(0, 180, 0);
-            GameObject newUnitObject = ObjectPool.Instance.SpawnFromPool(unitA.UnitType, newLevel, mergePosition, mergeRotation);
-            if (newUnitObject != null)
-            {
-                Unit newUnit = newUnitObject.GetComponent<Unit>();
-                newUnit.UnitLevel = newLevel;
-                newUnit.tag = TEAM_TAG;
-                newUnit.UpdateStats();
-                newUnit.CurrentTile = unitB.CurrentTile;
-                unitB.CurrentTile.SetUnit(newUnit);
+            Unit newUnit = newUnitObject.GetComponent<Unit>();
+            newUnit.UnitLevel = newLevel;
+            newUnit.tag = TEAM_TAG;
+            newUnit.UpdateStats();
+            newUnit.CurrentTile = unitB.CurrentTile;
+            unitB.CurrentTile.SetUnit(newUnit);
 
-                if (unitA.CurrentTile != null)
-                {
-                    unitA.CurrentTile.SetUnit(null);
-                    unitA.CurrentTile.CanSpawn = true;
-                }
-                ObjectPool.Instance.ReturnToPool(unitA.UnitType, unitA.gameObject);
-                if (unitB.CurrentTile != null)
-                {
-                    unitB.CurrentTile.SetUnit(newUnit);
-                    unitB.CurrentTile.CanSpawn = false;
-                }
-                ObjectPool.Instance.ReturnToPool(unitA.UnitType, unitB.gameObject);
+            if (unitA.CurrentTile != null)
+            {
+                unitA.CurrentTile.SetUnit(null);
+                unitA.CurrentTile.CanSpawn = true;
             }
+            ObjectPool.Instance.ReturnToPool(unitA.UnitType, unitA.gameObject);
+            if (unitB.CurrentTile != null)
+            {
+                unitB.CurrentTile.SetUnit(newUnit);
+                unitB.CurrentTile.CanSpawn = false;
+            }
+            ObjectPool.Instance.ReturnToPool(unitA.UnitType, unitB.gameObject);
         }
     }
 }

@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: -3152641982979799619}
   - component: {fileID: 6706624730971124128}
   - component: {fileID: 7152135254628043492}
+  - component: {fileID: 2530880249167046774}
   m_Layer: 0
   m_Name: Archer Lv1
   m_TagString: Enemy
@@ -415,6 +416,19 @@ CapsuleCollider:
   m_Height: 2.2594662
   m_Direction: 1
   m_Center: {x: 0, y: 0.84517384, z: 0}
+--- !u!114 &2530880249167046774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554878266444832957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7461d4b11742244a7f34273e9a7a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 10
 --- !u!1 &3104654277522462290
 GameObject:
   m_ObjectHideFlags: 0

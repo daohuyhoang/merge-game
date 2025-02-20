@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: -1365244981288088867}
   - component: {fileID: -4596745275497061434}
   - component: {fileID: -7265592477638552369}
+  - component: {fileID: -6310612135816449497}
   m_Layer: 0
   m_Name: Warrior Lv1
   m_TagString: Enemy
@@ -257,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e13ebbf80d060b498f415698a0b57be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitTypes: 00000000
+  unitModels: []
 --- !u!136 &-7265592477638552369
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -281,6 +282,19 @@ CapsuleCollider:
   m_Height: 1.9636621
   m_Direction: 1
   m_Center: {x: 0, y: 0.76690626, z: 0}
+--- !u!114 &-6310612135816449497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375427554918332493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7461d4b11742244a7f34273e9a7a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 20
 --- !u!1 &1494554725362507950
 GameObject:
   m_ObjectHideFlags: 0

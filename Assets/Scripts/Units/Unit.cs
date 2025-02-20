@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour
         set { unitLevel = value; }
     }
 
-    public int HP { get; private set; }
+    public UnitHealth UnitHealth { get; private set; }
     public int ATK { get; private set; }
     public Tile CurrentTile { get; set; }
 
@@ -31,14 +31,18 @@ public class Unit : MonoBehaviour
     private bool isAttacking = false;
     private Animator animator;
 
+    private void Awake()
+    {
+        UnitHealth = GetComponent<UnitHealth>();
+        animator = GetComponent<Animator>();
+    }
+
     private void Start()
     {
         UpdateStats();
         DisplayUnitInfo();
         CurrentTile = FindNearestTile();
         if (CurrentTile != null) CurrentTile.CanSpawn = false;
-        
-        animator = GetComponent<Animator>();
     }
 
     private void CheckForVictory()
@@ -48,7 +52,7 @@ public class Unit : MonoBehaviour
 
         foreach (Unit unit in allUnits)
         {
-            if (!unit.CompareTag(gameObject.tag) && unit.HP > 0)
+            if (!unit.CompareTag(gameObject.tag) && unit.UnitHealth.HP > 0)
             {
                 hasEnemy = true;
                 break;
@@ -57,7 +61,7 @@ public class Unit : MonoBehaviour
 
         if (!hasEnemy)
         {
-            VictoryAnimtation();
+            VictoryAnimation();
             UIManager.Instance.ShowVictoryPanel();
         }
     }
@@ -87,7 +91,7 @@ public class Unit : MonoBehaviour
     {
         if (unitData != null && UnitLevel <= unitData.maxLevel)
         {
-            HP = unitData.hpByLevel[UnitLevel - 1];
+            UnitHealth.Initialize(unitData.hpByLevel[UnitLevel - 1]);
             ATK = unitData.atkByLevel[UnitLevel - 1];
         }
     }
@@ -112,7 +116,7 @@ public class Unit : MonoBehaviour
 
     public void DisplayUnitInfo()
     {
-        Debug.Log($"Unit: {unitData.unitType}, Level: {UnitLevel}, HP: {HP}, ATK: {ATK}, Tag: {gameObject.tag}");
+        Debug.Log($"Unit: {unitData.unitType}, Level: {UnitLevel}, HP: {UnitHealth.HP}, ATK: {ATK}, Tag: {gameObject.tag}");
     }
 
     public void FindTarget()
@@ -123,7 +127,7 @@ public class Unit : MonoBehaviour
 
         foreach (Unit unit in allUnits)
         {
-            if (unit == this || unit.CompareTag(gameObject.tag) || unit.HP <= 0) continue;
+            if (unit == this || unit.CompareTag(gameObject.tag) || unit.UnitHealth.HP <= 0) continue;
             float distance = Vector3.Distance(transform.position, unit.transform.position);
             if (distance < shortestDistance)
             {
@@ -132,7 +136,7 @@ public class Unit : MonoBehaviour
             }
         }
         
-        if (targetUnit != null && targetUnit.HP <= 0) targetUnit = null;
+        if (targetUnit != null && targetUnit.UnitHealth.HP <= 0) targetUnit = null;
 
         if (nearestUnit != null && (targetUnit == null || shortestDistance < Vector3.Distance(transform.position, targetUnit.transform.position)))
         {
@@ -165,7 +169,7 @@ public class Unit : MonoBehaviour
 
     public void Attack()
     {
-        if (targetUnit == null || targetUnit.HP <= 0 || isAttacking) return;
+        if (targetUnit == null || targetUnit.UnitHealth.HP <= 0 || isAttacking) return;
         isAttacking = true;
         
         LookAtTarget();
@@ -187,9 +191,9 @@ public class Unit : MonoBehaviour
 
     private void DealDamage()
     {
-        if (targetUnit != null && targetUnit.HP > 0)
+        if (targetUnit != null && targetUnit.UnitHealth.HP > 0)
         {
-            targetUnit.TakeDamage(ATK);
+            targetUnit.UnitHealth.TakeDamage(ATK);
         }
         else
         {
@@ -198,19 +202,7 @@ public class Unit : MonoBehaviour
         isAttacking = false;
     }
 
-    public void TakeDamage(int damage)
-    {
-        if (HP <= 0) return;
-        
-        Debug.Log($"Hp: {HP}");
-        HP -= damage;
-        if (HP <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
+    public void OnUnitDied()
     {
         if (CurrentTile != null)
         {
@@ -218,20 +210,18 @@ public class Unit : MonoBehaviour
             CurrentTile.CanSpawn = true;
         }
         
-        if (animator != null) animator.SetTrigger("Die");
-        
         ObjectPool.Instance.ReturnToPool(UnitType, gameObject);
         this.enabled = false;
     }
     
-    public void VictoryAnimtation()
+    public void VictoryAnimation()
     {
         if (animator != null) animator.SetTrigger("Victory");
     }
 
     public void ResetUnit()
     {
-        HP = unitData.hpByLevel[UnitLevel - 1];
+        UnitHealth.ResetHealth();
         ATK = unitData.atkByLevel[UnitLevel - 1];
         isAttacking = false;
         targetUnit = null;
