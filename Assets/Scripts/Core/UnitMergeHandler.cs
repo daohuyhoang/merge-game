@@ -35,6 +35,8 @@ public class UnitMergeHandler : MonoBehaviour
             newUnit.UnitLevel = newLevel;
             newUnit.tag = TEAM_TAG;
             newUnit.UpdateStats();
+            UnitHealthBar healthBar = newUnit.GetComponentInChildren<UnitHealthBar>();
+            healthBar.SetHealthBarColor();
             newUnit.CurrentTile = unitB.CurrentTile;
             unitB.CurrentTile.SetUnit(newUnit);
 

@@ -30,7 +30,6 @@ public class UnitHealthBar : MonoBehaviour
 
         if (healthSlider == null || fillImage == null || unitHealth == null)
         {
-            Debug.LogError("HealthSlider, FillImage, or UnitHealth is missing!");
             enabled = false;
             return;
         }
