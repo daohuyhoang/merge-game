@@ -1,9 +1,13 @@
 using UnityEngine;
+using System;
 
 public class UnitHealth : MonoBehaviour
 {
     [SerializeField] private int maxHP;
     public int HP { get; private set; }
+    public int MaxHP => maxHP;
+
+    public event Action OnHealthChanged;
 
     private Animator animator;
     private Unit unit;
@@ -18,6 +22,7 @@ public class UnitHealth : MonoBehaviour
     {
         maxHP = hp;
         HP = maxHP;
+        OnHealthChanged?.Invoke();
     }
 
     public void TakeDamage(int damage)
@@ -27,10 +32,8 @@ public class UnitHealth : MonoBehaviour
         HP -= damage;
         Debug.Log($"Unit took {damage} damage. Remaining HP: {HP}");
 
-        if (unit.CompareTag("Enemy"))
-        {
-            CoinManager.Instance.AddCoin(damage);
-        }
+        OnHealthChanged?.Invoke();
+
         if (HP <= 0)
         {
             Die();
@@ -53,5 +56,6 @@ public class UnitHealth : MonoBehaviour
     public void ResetHealth()
     {
         HP = maxHP;
+        OnHealthChanged?.Invoke();
     }
 }

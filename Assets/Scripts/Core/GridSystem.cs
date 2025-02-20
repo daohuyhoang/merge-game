@@ -35,6 +35,8 @@ public class GridSystem : MonoBehaviour
                     tile.SetUnit(unit);
                     tile.CanSpawn = false;
                     unitObject.tag = teamTag;
+                    UnitHealthBar healthBar = unitObject.GetComponentInChildren<UnitHealthBar>();
+                    healthBar.SetHealthBarColor();
                 }
 
                 Unit otherUnit = tile.GetUnit();
