@@ -257,10 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e13ebbf80d060b498f415698a0b57be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitModels:
-  - {fileID: 1375427554918332493}
-  - {fileID: 5701433430873092493, guid: 390a3994664a96c449f5c6b822917769, type: 3}
-  - {fileID: 674046120696564982, guid: 3e48c13131c5cf541a47f84f7726f966, type: 3}
+  unitTypes: 00000000
 --- !u!136 &-7265592477638552369
 CapsuleCollider:
   m_ObjectHideFlags: 0

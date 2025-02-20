@@ -25,7 +25,7 @@ public class GridSystem : MonoBehaviour
             {
                 Vector3 spawnPosition = tile.transform.position + Vector3.up * 1.7f;
                 Quaternion rotation = Quaternion.Euler(0, 180, 0);
-                GameObject unitObject = ObjectPool.Instance.SpawnFromPool(unitType, spawnPosition, rotation);
+                GameObject unitObject = ObjectPool.Instance.SpawnFromPool(unitType, 1, spawnPosition, rotation);
 
                 Unit unit = unitObject.GetComponent<Unit>();
                 // unit.ResetUnit();

@@ -30,7 +30,7 @@ public class UnitMergeHandler : MonoBehaviour
             Vector3 mergePosition = unitB.transform.position;
             int newLevel = unitA.UnitLevel + 1;
             Quaternion mergeRotation = Quaternion.Euler(0, 180, 0);
-            GameObject newUnitObject = unitA.GetComponent<UnitModelHandler>().CreateHigherLevelUnit(newLevel, mergePosition, mergeRotation);
+            GameObject newUnitObject = ObjectPool.Instance.SpawnFromPool(unitA.UnitType, newLevel, mergePosition, mergeRotation);
             if (newUnitObject != null)
             {
                 Unit newUnit = newUnitObject.GetComponent<Unit>();
