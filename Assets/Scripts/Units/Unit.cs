@@ -42,7 +42,6 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         UpdateStats();
-        DisplayUnitInfo();
         CurrentTile = FindNearestTile();
         if (CurrentTile != null) CurrentTile.CanSpawn = false;
 
@@ -98,11 +97,6 @@ public class Unit : MonoBehaviour
             }
         }
         return nearestTile;
-    }
-
-    public void DisplayUnitInfo()
-    {
-        Debug.Log($"Unit: {unitData.unitType}, Level: {UnitLevel}, HP: {UnitHealth.HP}, ATK: {ATK}, Tag: {gameObject.tag}");
     }
 
     public void FindTarget()

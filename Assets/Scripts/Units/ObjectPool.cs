@@ -26,7 +26,6 @@ public class ObjectPool : MonoBehaviour
         foreach (Pool pool in pools)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
-
             for (int i = 0; i < pool.size; i++)
             {
                 foreach (var prefab in pool.prefabs)

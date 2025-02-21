@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class UnitHealth : MonoBehaviour
 {
@@ -29,8 +29,13 @@ public class UnitHealth : MonoBehaviour
     {
         if (HP <= 0) return;
 
-        HP -= damage;
-        Debug.Log($"Unit took {damage} damage. Remaining HP: {HP}");
+        int damageDealt = Mathf.Min(damage, HP);
+        HP -= damageDealt;
+
+        if (unit.CompareTag("Enemy"))
+        {
+            CoinManager.Instance.AddCoin(damageDealt);
+        }
 
         OnHealthChanged?.Invoke();
 

@@ -1009,6 +1009,7 @@ GameObject:
   - component: {fileID: 2667342032744788489}
   - component: {fileID: 8519038691215546772}
   - component: {fileID: 3073461010168322189}
+  - component: {fileID: -64572353651311944}
   m_Layer: 0
   m_Name: Archer Lv3
   m_TagString: Untagged
@@ -1120,6 +1121,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 52
+--- !u!114 &-64572353651311944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6896953329117481067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e60d644f07a6684a854ed0ad081df47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6984759610436155747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,8 +1744,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5634173550406151687, guid: 28cac8bd579b660439a8c52af1c1b643,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1884154706600684749}
   m_SourcePrefab: {fileID: 100100000, guid: 28cac8bd579b660439a8c52af1c1b643, type: 3}
+--- !u!1 &2709001160825082129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5634173550406151687, guid: 28cac8bd579b660439a8c52af1c1b643,
+    type: 3}
+  m_PrefabInstance: {fileID: 7757684338799787798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1884154706600684749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709001160825082129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24324f4cf03d8d489ab15a331217438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7344493946741486639 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1028006646565948217, guid: 28cac8bd579b660439a8c52af1c1b643,

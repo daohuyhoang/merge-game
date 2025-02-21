@@ -1,7 +1,11 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 public class CoinManager : MonoBehaviour
 {
+    [SerializeField] private TMP_Text coinText;
+    
     public static CoinManager Instance;
 
     private int totalCoin = 120;
@@ -18,6 +22,11 @@ public class CoinManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        UpdateCoinUI();
+    }
+
     public void AddCoin(int damageDealt)
     {
         totalCoin += damageDealt;
@@ -27,5 +36,10 @@ public class CoinManager : MonoBehaviour
     public int GetTotalCoin()
     {
         return totalCoin;
+    }
+    
+    public void UpdateCoinUI()
+    {
+        coinText.text = $"Coins: {totalCoin}";
     }
 }

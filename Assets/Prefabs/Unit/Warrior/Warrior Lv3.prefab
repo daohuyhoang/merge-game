@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: -1895856820290402146}
   - component: {fileID: 8622875154934836286}
   - component: {fileID: 3949904746229207948}
+  - component: {fileID: 4113267319560106143}
   m_Layer: 0
   m_Name: Warrior Lv3
   m_TagString: Enemy
@@ -251,6 +252,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 112
+--- !u!114 &4113267319560106143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674046120696564982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e60d644f07a6684a854ed0ad081df47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1476140188099483404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,7 +1013,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5634173550406151687, guid: 28cac8bd579b660439a8c52af1c1b643,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2789221673539100427}
   m_SourcePrefab: {fileID: 100100000, guid: 28cac8bd579b660439a8c52af1c1b643, type: 3}
 --- !u!224 &1447475591908097722 stripped
 RectTransform:
@@ -1008,3 +1025,21 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1896650928899437955}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6080663268893596548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5634173550406151687, guid: 28cac8bd579b660439a8c52af1c1b643,
+    type: 3}
+  m_PrefabInstance: {fileID: 1896650928899437955}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2789221673539100427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080663268893596548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24324f4cf03d8d489ab15a331217438, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
