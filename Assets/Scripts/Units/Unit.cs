@@ -30,10 +30,12 @@ public class Unit : MonoBehaviour
     private Unit targetUnit;
     private bool isAttacking = false;
     private Animator animator;
+    private CheckVictory checkVictory;
 
     private void Awake()
     {
         UnitHealth = GetComponent<UnitHealth>();
+        checkVictory = GetComponent<CheckVictory>();
         animator = GetComponent<Animator>();
     }
 
@@ -43,26 +45,10 @@ public class Unit : MonoBehaviour
         DisplayUnitInfo();
         CurrentTile = FindNearestTile();
         if (CurrentTile != null) CurrentTile.CanSpawn = false;
-    }
 
-    private void CheckForVictory()
-    {
-        Unit[] allUnits = FindObjectsOfType<Unit>();
-        bool hasEnemy = false;
-
-        foreach (Unit unit in allUnits)
+        if (gameObject.CompareTag("Enemy"))
         {
-            if (!unit.CompareTag(gameObject.tag) && unit.UnitHealth.HP > 0)
-            {
-                hasEnemy = true;
-                break;
-            }
-        }
-
-        if (!hasEnemy)
-        {
-            VictoryAnimation();
-            UIManager.Instance.ShowVictoryPanel();
+            EnemyManager.Instance.RegisterEnemy(this);
         }
     }
 
@@ -82,8 +68,8 @@ public class Unit : MonoBehaviour
                     Attack();
                 }
             }
-
-            CheckForVictory();
+            checkVictory.CheckForPlayerVictory();
+            checkVictory.CheckForEnemyVictory();
         }
     }
 
@@ -208,6 +194,11 @@ public class Unit : MonoBehaviour
         {
             CurrentTile.SetUnit(null);
             CurrentTile.CanSpawn = true;
+        }
+
+        if (gameObject.CompareTag("Enemy"))
+        {
+            EnemyManager.Instance.UnregisterEnemy(this);
         }
         
         ObjectPool.Instance.ReturnToPool(UnitType, gameObject);

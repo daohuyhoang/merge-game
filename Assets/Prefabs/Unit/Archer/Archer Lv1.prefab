@@ -300,9 +300,9 @@ GameObject:
   - component: {fileID: 4400838778824470042}
   - component: {fileID: 6027750423706124785}
   - component: {fileID: -3152641982979799619}
-  - component: {fileID: 6706624730971124128}
   - component: {fileID: 7152135254628043492}
   - component: {fileID: 2530880249167046774}
+  - component: {fileID: 9122987657143415844}
   m_Layer: 0
   m_Name: Archer Lv1
   m_TagString: Enemy
@@ -378,22 +378,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0390741a574c8964eaaaddf8d5aa1040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6706624730971124128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2554878266444832957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e13ebbf80d060b498f415698a0b57be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitModels:
-  - {fileID: 2554878266444832957}
-  - {fileID: 880369612494016691, guid: f16c75af1a5e14b4f93141048d2fdfc9, type: 3}
-  - {fileID: 6896953329117481067, guid: 0e591ab39c223d24781a783ea0afdd87, type: 3}
 --- !u!136 &7152135254628043492
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -430,6 +414,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 10
+--- !u!114 &9122987657143415844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2554878266444832957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e60d644f07a6684a854ed0ad081df47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3104654277522462290
 GameObject:
   m_ObjectHideFlags: 0

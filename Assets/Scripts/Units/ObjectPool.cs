@@ -74,4 +74,16 @@ public class ObjectPool : MonoBehaviour
         objectToReturn.SetActive(false);
         poolDictionary[unitType].Enqueue(objectToReturn);
     }
+    
+    public bool AreAllUnitsInactive()
+    {
+        foreach (var pool in poolDictionary.Values)
+        {
+            if (pool.Any(obj => obj.activeInHierarchy))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

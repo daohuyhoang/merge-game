@@ -1008,7 +1008,6 @@ GameObject:
   - component: {fileID: -1209839370365503929}
   - component: {fileID: 2667342032744788489}
   - component: {fileID: 8519038691215546772}
-  - component: {fileID: 5755015382718746712}
   - component: {fileID: 3073461010168322189}
   m_Layer: 0
   m_Name: Archer Lv3
@@ -1108,22 +1107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0390741a574c8964eaaaddf8d5aa1040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5755015382718746712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6896953329117481067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e13ebbf80d060b498f415698a0b57be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitModels:
-  - {fileID: 2554878266444832957, guid: 4d5113fdb0357ff4b89a7255e3113d45, type: 3}
-  - {fileID: 880369612494016691, guid: f16c75af1a5e14b4f93141048d2fdfc9, type: 3}
-  - {fileID: 6896953329117481067}
 --- !u!114 &3073461010168322189
 MonoBehaviour:
   m_ObjectHideFlags: 0
