@@ -38,6 +38,12 @@ public class EnemyManager : MonoBehaviour
 
     public bool AreAllEnemiesDead()
     {
-        return enemies.Count == 0 || enemies.All(enemy => enemy.UnitHealth.HP <= 0);
+        if (enemies == null || enemies.Count == 0)
+        {
+            return true;
+        }
+
+        return enemies.All(enemy => enemy != null && enemy.UnitHealth != null && enemy.UnitHealth.HP <= 0);
     }
+
 }

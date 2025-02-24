@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -40,6 +39,6 @@ public class CoinManager : MonoBehaviour
     
     public void UpdateCoinUI()
     {
-        coinText.text = $"Coins: {totalCoin}";
+        coinText.text = $"{totalCoin}";
     }
 }

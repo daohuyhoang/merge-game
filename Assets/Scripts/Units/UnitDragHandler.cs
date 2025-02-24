@@ -11,13 +11,50 @@ public class UnitDragHandler : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-    private void Update() => HandleMouseInput();
+    private void Update()
+    {
+        HandleInput();
+    }
+
+    private void HandleInput()
+    {
+        if (Application.isMobilePlatform)
+        {
+            HandleTouchInput();
+        }
+        else
+        {
+            HandleMouseInput();
+        }
+    }
 
     private void HandleMouseInput()
     {
         if (Input.GetMouseButtonDown(0)) OnPointerDown(GetMouseWorldPosition());
         else if (Input.GetMouseButton(0) && isDragging) OnPointerDrag(GetMouseWorldPosition());
         else if (Input.GetMouseButtonUp(0)) OnPointerUp();
+    }
+
+    private void HandleTouchInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    OnPointerDown(GetTouchWorldPosition(touch.position));
+                    break;
+                case TouchPhase.Moved:
+                    if (isDragging) OnPointerDrag(GetTouchWorldPosition(touch.position));
+                    break;
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    OnPointerUp();
+                    break;
+            }
+        }
     }
 
     private void OnPointerDown(Vector3 pointerPosition)
@@ -47,6 +84,14 @@ public class UnitDragHandler : MonoBehaviour
     private Vector3 GetMouseWorldPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        if (groundPlane.Raycast(ray, out float distance)) return ray.GetPoint(distance);
+        return Vector3.zero;
+    }
+
+    private Vector3 GetTouchWorldPosition(Vector2 touchPosition)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(touchPosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         if (groundPlane.Raycast(ray, out float distance)) return ray.GetPoint(distance);
         return Vector3.zero;

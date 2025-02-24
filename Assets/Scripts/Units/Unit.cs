@@ -131,9 +131,9 @@ public class Unit : MonoBehaviour
 
         if (distanceToTarget <= attackRange)
         {
+            LookAtTarget();
             animator.SetBool("Run", false);
             animator.SetBool("Attack", true);
-            LookAtTarget();
             Attack();
             return;
         }
@@ -171,13 +171,13 @@ public class Unit : MonoBehaviour
 
     private void DealDamage()
     {
-        if (targetUnit != null && targetUnit.UnitHealth.HP > 0)
+        if (targetUnit == null || targetUnit.UnitHealth.HP <= 0) return;
+
+        float distanceToTarget = Vector3.Distance(transform.position, targetUnit.transform.position);
+
+        if (distanceToTarget <= attackRange)
         {
             targetUnit.UnitHealth.TakeDamage(ATK);
-        }
-        else
-        {
-            targetUnit = null;
         }
         isAttacking = false;
     }
