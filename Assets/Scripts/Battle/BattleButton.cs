@@ -18,6 +18,11 @@ public class BattleButton : MonoBehaviour
 
     private void StartBattle()
     {
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.SavePlayerUnits();
+        }
+
         if (BattleManager.Instance != null)
         {
             BattleManager.Instance.StartBattle();

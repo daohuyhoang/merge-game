@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour
     public Tile CurrentTile { get; set; }
 
     [SerializeField] private UnitData unitData;
+    public UnitData UnitData => unitData;
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float moveSpeed = 3f;
 
@@ -156,7 +157,7 @@ public class Unit : MonoBehaviour
         
         if (animator != null) animator.SetTrigger("Attack");
         
-        Invoke("DealDamage", 1f);
+        Invoke("DealDamage", 1.25f);
     }
     
     private void LookAtTarget()
@@ -202,14 +203,5 @@ public class Unit : MonoBehaviour
     public void VictoryAnimation()
     {
         if (animator != null) animator.SetTrigger("Victory");
-    }
-
-    public void ResetUnit()
-    {
-        UnitHealth.ResetHealth();
-        ATK = unitData.atkByLevel[UnitLevel - 1];
-        isAttacking = false;
-        targetUnit = null;
-        animator.SetTrigger("Idle");
     }
 }

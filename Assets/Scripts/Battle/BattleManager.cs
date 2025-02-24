@@ -3,7 +3,7 @@ using UnityEngine;
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance;
-    
+
     private bool isBattleActive = false;
 
     [SerializeField] private Camera mainCamera;
