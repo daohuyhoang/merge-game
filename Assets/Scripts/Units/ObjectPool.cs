@@ -46,8 +46,7 @@ public class ObjectPool : MonoBehaviour
         {
             return null;
         }
-        // GameObject prefab = pools.Find(p => p.unitType == unitType).prefabs[level - 1];
-
+        
         GameObject objectToSpawn = poolDictionary[unitType].FirstOrDefault(obj => obj.GetComponent<Unit>().UnitLevel == level && !obj.activeInHierarchy);
 
         if (objectToSpawn == null)
