@@ -34,7 +34,7 @@ public class UnitHealth : MonoBehaviour
 
         if (unit.CompareTag("Enemy"))
         {
-            CoinManager.Instance.AddCoin(damageDealt);
+            SpinRewardSystem.Instance.AddToTotalDamageDealt(damageDealt);
         }
 
         OnHealthChanged?.Invoke();

@@ -21,15 +21,11 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        UpdateCoinUI();
-    }
-
     public void AddCoin(int damageDealt)
     {
         totalCoin += damageDealt;
         Debug.Log($"Added {damageDealt} coins. Total coins: {totalCoin}");
+        UpdateCoinUI();
     }
 
     public int GetTotalCoin()

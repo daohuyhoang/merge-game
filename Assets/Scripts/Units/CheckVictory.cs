@@ -26,22 +26,7 @@ public class CheckVictory : MonoBehaviour
         {
             BattleManager.Instance.ResetCameraFOV();
             unit.VictoryAnimation();
-            SaveAndLoadNextScene();
-        }
-    }
-
-    private void SaveAndLoadNextScene()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
-
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-        else
-        {
-            SceneManager.LoadScene(0);
+            SpinRewardSystem.Instance.ShowSpinPanel();
         }
     }
 

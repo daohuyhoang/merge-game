@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class BattleButton : MonoBehaviour
 {
     [SerializeField] private Button battleButton;
+    [SerializeField] private Canvas buttonCanvas;
 
     private void Start()
     {
@@ -30,6 +31,11 @@ public class BattleButton : MonoBehaviour
         else
         {
             Debug.LogError("BattleManager instance is missing!");
+        }
+
+        if (buttonCanvas != null)
+        {
+            buttonCanvas.gameObject.SetActive(false);
         }
     }
 }

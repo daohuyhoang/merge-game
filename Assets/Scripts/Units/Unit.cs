@@ -32,6 +32,7 @@ public class Unit : MonoBehaviour
     private bool isAttacking = false;
     private Animator animator;
     private CheckVictory checkVictory;
+    private int totalDamageDealt;
 
     private void Awake()
     {
