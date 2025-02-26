@@ -27,6 +27,7 @@ public class CheckVictory : MonoBehaviour
             BattleManager.Instance.ResetCameraFOV();
             unit.VictoryAnimation();
             SpinRewardSystem.Instance.ShowSpinPanel();
+            SpinRewardSystem.Instance.SetResultText("Victory!");
         }
     }
 

@@ -10,6 +10,7 @@ public class SpinRewardSystem : MonoBehaviour
     [SerializeField] private Button spinButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private TMP_Text rewardText;
+    [SerializeField] private TMP_Text resultText;
     [SerializeField] private Transform spinWheel;
 
     private float[] rewardAngles = { 0f, 179.993f, 45f, 224.993f, 90f, 269.993f, 134.993f, 314.993f };
@@ -50,6 +51,11 @@ public class SpinRewardSystem : MonoBehaviour
     {
         spinPanel.SetActive(true);
     }
+    
+    public void SetResultText(string text)
+    {
+        resultText.text = text;
+    }
 
     private void StartSpin()
     {
@@ -86,7 +92,7 @@ public class SpinRewardSystem : MonoBehaviour
     {
         reward = totalDamageDealt * rewardMultiplier;
 
-        rewardText.text = $"You got x{rewardMultiplier} reward! Total coins: {CoinManager.Instance.GetTotalCoin() + reward}";
+        rewardText.text = $"YOU EARNED: +{reward}";
 
         continueButton.gameObject.SetActive(true);
 
@@ -121,5 +127,7 @@ public class SpinRewardSystem : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+        
+        CoinManager.Instance.UpdateCoinUI();
     }
 }
