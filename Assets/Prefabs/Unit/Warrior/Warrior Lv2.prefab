@@ -610,7 +610,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: -8.1, y: 0.30000007, z: 6.5}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7773519849214412913}
@@ -677,7 +677,7 @@ MonoBehaviour:
   unitType: 0
   unitLevel: 2
   unitData: {fileID: 11400000, guid: 4c8348f425b253d4aa9cee11c2b0503e, type: 2}
-  attackRange: 1.5
+  attackRange: 2
   moveSpeed: 5
 --- !u!114 &3945532005417460558
 MonoBehaviour:
@@ -1102,7 +1102,7 @@ PrefabInstance:
     - target: {fileID: 3074739021262107989, guid: 28cac8bd579b660439a8c52af1c1b643,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 179.6
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 6024700030894016261, guid: 28cac8bd579b660439a8c52af1c1b643,
         type: 3}

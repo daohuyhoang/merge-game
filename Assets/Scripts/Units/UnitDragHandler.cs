@@ -18,6 +18,8 @@ public class UnitDragHandler : MonoBehaviour
 
     private void HandleInput()
     {
+        if (BattleManager.Instance != null && BattleManager.Instance.IsBattleActive()) return;
+        
         if (Application.isMobilePlatform)
         {
             HandleTouchInput();
