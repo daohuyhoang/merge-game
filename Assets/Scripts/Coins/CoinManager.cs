@@ -22,10 +22,15 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    public void AddCoin(int damageDealt)
+    private void Start()
     {
-        totalCoin += damageDealt;
-        Debug.Log($"Added {damageDealt} coins. Total coins: {totalCoin}");
+        UpdateCoinUI();
+    }
+
+    public void AddCoin(int amount)
+    {
+        totalCoin += amount;
+        Debug.Log($"Added {amount} coins. Total coins: {totalCoin}");
         UpdateCoinUI();
     }
 
@@ -36,6 +41,9 @@ public class CoinManager : MonoBehaviour
     
     public void UpdateCoinUI()
     {
-        coinText.text = $"{totalCoin}";
+        if (coinText != null)
+        {
+            coinText.text = $"{totalCoin}";
+        }
     }
 }

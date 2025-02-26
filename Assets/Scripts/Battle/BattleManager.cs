@@ -24,7 +24,7 @@ public class BattleManager : MonoBehaviour
 
             if (mainCamera != null)
             {
-                mainCamera.fieldOfView = 47.6f;
+                mainCamera.fieldOfView = 53.8f;
             }
 
             Unit[] allUnits = FindObjectsOfType<Unit>();

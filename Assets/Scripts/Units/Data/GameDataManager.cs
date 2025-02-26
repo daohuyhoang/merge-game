@@ -8,6 +8,11 @@ public class GameDataManager : MonoBehaviour
    public static GameDataManager Instance;
 
    public List<UnitDataSave> playerUnitsData = new List<UnitDataSave>();
+   
+   public int SpawnCountWarrior { get; set; }
+   public int SpawnCountArcher { get; set; }
+   public int SpawnCostWarrior { get; set; }
+   public int SpawnCostArcher { get; set; }
 
    private void Awake()
    {
@@ -28,7 +33,7 @@ public class GameDataManager : MonoBehaviour
 
       Unit[] allUnits = FindObjectsOfType<Unit>();
       foreach (Unit unit in allUnits)
-      {
+      {  
          if (unit.CompareTag("Player"))
          {
             if (unit == null || unit.UnitHealth == null)

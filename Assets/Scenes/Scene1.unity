@@ -556,7 +556,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 121
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651,
@@ -1882,7 +1882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 121
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 605433b68313d491a8ab88bc03a41651, type: 2}
   m_sharedMaterial: {fileID: 2830636965969884548, guid: 605433b68313d491a8ab88bc03a41651,
@@ -3553,6 +3553,16 @@ PrefabInstance:
       propertyPath: warriorButton
       value: 
       objectReference: {fileID: 766757200}
+    - target: {fileID: 6386435831098631386, guid: 65c3878c5939c1143bfad81e53e9aa02,
+        type: 3}
+      propertyPath: archerCostText
+      value: 
+      objectReference: {fileID: 1129276129}
+    - target: {fileID: 6386435831098631386, guid: 65c3878c5939c1143bfad81e53e9aa02,
+        type: 3}
+      propertyPath: warriorCostText
+      value: 
+      objectReference: {fileID: 218395287}
     - target: {fileID: 6439977510056012712, guid: 65c3878c5939c1143bfad81e53e9aa02,
         type: 3}
       propertyPath: m_Name
@@ -3585,6 +3595,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 63.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2928012164305800300, guid: 4e0fde9ba1b87764e94286edbabe01cd,
+        type: 3}
+      propertyPath: m_text
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2928012164305800300, guid: 4e0fde9ba1b87764e94286edbabe01cd,
         type: 3}
