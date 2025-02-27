@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -144,11 +145,10 @@ public class Unit : MonoBehaviour
             Attack();
             return;
         }
-
+        LookAtTarget();
         animator.SetBool("Run", true);
         animator.SetBool("Attack", false);
         
-        LookAtTarget();
 
         Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
@@ -158,14 +158,23 @@ public class Unit : MonoBehaviour
     {
         if (targetUnit == null || targetUnit.UnitHealth.HP <= 0 || isAttacking) return;
         isAttacking = true;
-        
-        LookAtTarget();
-        
+
+        // LookAtTarget();
+
         if (animator != null) animator.SetTrigger("Attack");
-        
-        // Invoke("PlayAttackEffect", 1.25f);
+
+        // Bắt đầu Coroutine để đồng bộ effect và damage
+        StartCoroutine(AttackSequence());
+    }
+
+    private IEnumerator AttackSequence()
+    {
+        yield return new WaitForSeconds(0.5f);
         PlayAttackEffect();
-        Invoke("DealDamage", 1.25f);
+        // yield return new WaitForSeconds(0.3666f);
+        yield return new WaitForSeconds(0.7333f);
+        DealDamage();
+        isAttacking = false;
     }
 
     private void PlayAttackEffect()
@@ -187,10 +196,13 @@ public class Unit : MonoBehaviour
                 attackEffectPrefab = archerAttackEffectPrefab;
                 if (attackEffectPrefab != null && targetUnit != null)
                 {
-                    GameObject effectAtTarget = Instantiate(attackEffectPrefab, targetUnit.transform.position, Quaternion.identity);
-                    Destroy(effectAtTarget, 1f);
+                    // GameObject effectAtTarget = Instantiate(attackEffectPrefab, targetUnit.transform.position, Quaternion.identity);
+                    // Destroy(effectAtTarget, 1f);
+                    Vector3 direction = targetUnit.transform.position - transform.position;
+                    direction.y = 0;
+                    Quaternion rotation = Quaternion.LookRotation(direction);
 
-                    GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, Quaternion.identity);
+                    GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, rotation);
                     Destroy(effectAtArcher, 1f);
                 }
                 break;
@@ -216,8 +228,8 @@ public class Unit : MonoBehaviour
         if (distanceToTarget <= attackRange)
         {
             targetUnit.UnitHealth.TakeDamage(ATK);
+            Debug.Log("Dealt damage!");
         }
-        isAttacking = false;
     }
 
     public void OnUnitDied()

@@ -7,7 +7,7 @@ public class CoinManager : MonoBehaviour
     
     public static CoinManager Instance;
 
-    private int totalCoin = 120;
+    private int totalCoin = 900;
 
     private void Awake()
     {
@@ -43,7 +43,27 @@ public class CoinManager : MonoBehaviour
     {
         if (coinText != null)
         {
-            coinText.text = $"{totalCoin}";
+            coinText.text = FormatCoin(totalCoin);
+        }
+    }
+
+    private string FormatCoin(int coin)
+    {
+        if (coin >= 1000000000)
+        {
+            return $"{coin / 1000000000}B";
+        }
+        else if (coin >= 1000000) 
+        {
+            return $"{coin / 1000000}M";
+        }
+        else if (coin >= 1000) 
+        {
+            return $"{coin / 1000}k";
+        }
+        else
+        {
+            return $"{coin}";
         }
     }
 }

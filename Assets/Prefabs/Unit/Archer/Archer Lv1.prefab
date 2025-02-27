@@ -313,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 2274989016093074682}
   serializedVersion: 2
   m_LocalRotation: {x: -0.021192446, y: -0.6997872, z: -0.10359983, w: 0.7064814}
-  m_LocalPosition: {x: -0.8, y: 141.6, z: 1.8}
+  m_LocalPosition: {x: -0.1, y: 201.5, z: -0.3}
   m_LocalScale: {x: 99.99998, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -399,9 +399,10 @@ MonoBehaviour:
   moveSpeed: 3
   warriorAttackEffectPrefab: {fileID: 3153472991145048103, guid: 3407e378c048bb5438424b28c7740b48,
     type: 3}
-  archerAttackEffectPrefab: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98,
+  archerAttackEffectPrefab: {fileID: 2715471840370901047, guid: df9374346b76e444dbbb2b019de4da25,
     type: 3}
   positionArcherHitEffect: {fileID: 4758842887634713228}
+  positionWarriorHitEffect: {fileID: 0}
 --- !u!114 &-3152641982979799619
 MonoBehaviour:
   m_ObjectHideFlags: 0
