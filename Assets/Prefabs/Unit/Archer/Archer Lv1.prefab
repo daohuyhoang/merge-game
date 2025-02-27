@@ -288,6 +288,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8413383691400313520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2274989016093074682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4758842887634713228}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4758842887634713228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2274989016093074682}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.021192446, y: -0.6997872, z: -0.10359983, w: 0.7064814}
+  m_LocalPosition: {x: -0.8, y: 141.6, z: 1.8}
+  m_LocalScale: {x: 99.99998, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3933861472600232863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2554878266444832957
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +397,11 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: cedebb856fd266c49b7b005fc60c304c, type: 2}
   attackRange: 50
   moveSpeed: 3
+  warriorAttackEffectPrefab: {fileID: 3153472991145048103, guid: 3407e378c048bb5438424b28c7740b48,
+    type: 3}
+  archerAttackEffectPrefab: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98,
+    type: 3}
+  positionArcherHitEffect: {fileID: 4758842887634713228}
 --- !u!114 &-3152641982979799619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,7 +490,8 @@ Transform:
   m_LocalPosition: {x: -50.983036, y: -54.37775, z: -77.06237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4758842887634713228}
   m_Father: {fileID: 1574807514267669448}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3289145577445976767

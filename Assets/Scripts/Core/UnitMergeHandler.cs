@@ -4,6 +4,8 @@ public class UnitMergeHandler : MonoBehaviour
 {
     public static UnitMergeHandler Instance;
     
+    [SerializeField] GameObject mergeEffectPrefab;
+    
     private string TEAM_TAG = "Player";
 
     private void Awake()
@@ -52,6 +54,11 @@ public class UnitMergeHandler : MonoBehaviour
                 unitB.CurrentTile.CanSpawn = false;
             }
             ObjectPool.Instance.ReturnToPool(unitA.UnitType, unitB.gameObject);
+            if (mergeEffectPrefab != null)
+            {
+                GameObject effect = Instantiate(mergeEffectPrefab, mergePosition, Quaternion.identity);
+                Destroy(effect, 1f);
+            }
         }
     }
 }

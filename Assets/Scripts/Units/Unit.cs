@@ -34,6 +34,11 @@ public class Unit : MonoBehaviour
     private CheckVictory checkVictory;
     private int totalDamageDealt;
 
+    [SerializeField] private GameObject warriorAttackEffectPrefab;
+    [SerializeField] private GameObject archerAttackEffectPrefab;
+    [SerializeField] private Transform positionArcherHitEffect;
+    [SerializeField] private Transform positionWarriorHitEffect;
+
     private void Awake()
     {
         UnitHealth = GetComponent<UnitHealth>();
@@ -158,7 +163,38 @@ public class Unit : MonoBehaviour
         
         if (animator != null) animator.SetTrigger("Attack");
         
+        // Invoke("PlayAttackEffect", 1.25f);
+        PlayAttackEffect();
         Invoke("DealDamage", 1.25f);
+    }
+
+    private void PlayAttackEffect()
+    {
+        GameObject attackEffectPrefab = null;
+
+        switch (unitType)
+        {
+            case UnitTypeEnum.Warrior:
+                attackEffectPrefab = warriorAttackEffectPrefab;
+                if (attackEffectPrefab != null && targetUnit != null)
+                {
+                    GameObject effect = Instantiate(attackEffectPrefab, positionWarriorHitEffect.transform.position, Quaternion.Euler(0, 180, 0));
+                    Destroy(effect, 1f);
+                }
+                break;
+
+            case UnitTypeEnum.Archer:
+                attackEffectPrefab = archerAttackEffectPrefab;
+                if (attackEffectPrefab != null && targetUnit != null)
+                {
+                    GameObject effectAtTarget = Instantiate(attackEffectPrefab, targetUnit.transform.position, Quaternion.identity);
+                    Destroy(effectAtTarget, 1f);
+
+                    GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, Quaternion.identity);
+                    Destroy(effectAtArcher, 1f);
+                }
+                break;
+        }
     }
     
     private void LookAtTarget()
