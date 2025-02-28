@@ -403,6 +403,8 @@ MonoBehaviour:
     type: 3}
   positionArcherHitEffect: {fileID: 4758842887634713228}
   positionWarriorHitEffect: {fileID: 0}
+  warriorAttackSound: {fileID: 0}
+  archerAttackSound: {fileID: 0}
 --- !u!114 &-3152641982979799619
 MonoBehaviour:
   m_ObjectHideFlags: 0

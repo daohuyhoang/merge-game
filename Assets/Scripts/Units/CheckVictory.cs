@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,9 +27,15 @@ public class CheckVictory : MonoBehaviour
         {
             BattleManager.Instance.ResetCameraFOV();
             unit.VictoryAnimation();
-            SpinRewardSystem.Instance.ShowSpinPanel();
-            SpinRewardSystem.Instance.SetResultText("Victory!");
+            StartCoroutine(ShowSpinAfterDelay(1f));
         }
+    }
+
+    private IEnumerator ShowSpinAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SpinRewardSystem.Instance.ShowSpinPanel();
+        SpinRewardSystem.Instance.SetResultText("Victory!");
     }
 
     private void RestartCurrentScene()

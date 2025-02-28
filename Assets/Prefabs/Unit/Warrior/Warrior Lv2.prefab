@@ -710,12 +710,14 @@ MonoBehaviour:
   unitLevel: 2
   unitData: {fileID: 11400000, guid: 4c8348f425b253d4aa9cee11c2b0503e, type: 2}
   attackRange: 2
-  moveSpeed: 4
+  moveSpeed: 3
   warriorAttackEffectPrefab: {fileID: 358637981425055526, guid: 8eb503696b886e04faff8fc0f480d473,
     type: 3}
   archerAttackEffectPrefab: {fileID: 0}
   positionArcherHitEffect: {fileID: 0}
   positionWarriorHitEffect: {fileID: 2062524441108250862}
+  warriorAttackSound: {fileID: 0}
+  archerAttackSound: {fileID: 0}
 --- !u!114 &3945532005417460558
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34,17 +34,21 @@ public class Unit : MonoBehaviour
     private Animator animator;
     private CheckVictory checkVictory;
     private int totalDamageDealt;
+    private AudioSource audioSource;
 
     [SerializeField] private GameObject warriorAttackEffectPrefab;
     [SerializeField] private GameObject archerAttackEffectPrefab;
     [SerializeField] private Transform positionArcherHitEffect;
     [SerializeField] private Transform positionWarriorHitEffect;
+    [SerializeField] private AudioClip warriorAttackSound;
+    [SerializeField] private AudioClip archerAttackSound;
 
     private void Awake()
     {
         UnitHealth = GetComponent<UnitHealth>();
         checkVictory = GetComponent<CheckVictory>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -170,6 +174,10 @@ public class Unit : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         PlayAttackEffect();
+        if (isAttacking)
+        {
+            PlayAttackSound();
+        }
         yield return new WaitForSeconds(0.7333f);
         DealDamage();
         isAttacking = false;
@@ -206,6 +214,29 @@ public class Unit : MonoBehaviour
                     Destroy(effectAtArcher, 1f);
                 }
                 break;
+        }
+    }
+    
+    private void PlayAttackSound()
+    {
+        if (audioSource != null)
+        {
+            switch (unitType)
+            {
+                case UnitTypeEnum.Warrior:
+                    if (warriorAttackSound != null)
+                    {
+                        audioSource.PlayOneShot(warriorAttackSound);
+                    }
+                    break;
+
+                case UnitTypeEnum.Archer:
+                    if (archerAttackSound != null)
+                    {
+                        audioSource.PlayOneShot(archerAttackSound);
+                    }
+                    break;
+            }
         }
     }
     

@@ -73,9 +73,8 @@ public class GridSystem : MonoBehaviour
                     GameDataManager.Instance.SpawnCountArcher++;
                     GameDataManager.Instance.SpawnCostArcher = spawnCost;
                 }
-
                 UpdateCostTexts();
-
+                StartCoroutine(UnitMergeHandler.ScaleEffect(unitObject.transform));
                 break;
             }
         }

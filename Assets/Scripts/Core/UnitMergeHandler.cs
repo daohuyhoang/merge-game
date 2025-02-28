@@ -1,11 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
 public class UnitMergeHandler : MonoBehaviour
 {
     public static UnitMergeHandler Instance;
-    
+
     [SerializeField] GameObject mergeEffectPrefab;
-    
+
     private string TEAM_TAG = "Player";
 
     private void Awake()
@@ -59,6 +60,38 @@ public class UnitMergeHandler : MonoBehaviour
                 GameObject effect = Instantiate(mergeEffectPrefab, mergePosition, Quaternion.identity);
                 Destroy(effect, 1f);
             }
+
+            StartCoroutine(ScaleEffect(newUnitObject.transform));
         }
+    }
+
+    public static IEnumerator ScaleEffect(Transform targetTransform)
+    {
+        float duration = 0.5f;
+        float elapsedTime = 0f;
+
+        Vector3 startScale = new Vector3(0.8f, 0.8f, 0.8f);
+        Vector3 midScale = new Vector3(1.2f, 1.2f, 1.2f);
+        Vector3 endScale = Vector3.one;
+
+        while (elapsedTime < duration)
+        {
+            targetTransform.localScale = Vector3.Lerp(startScale, midScale, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        targetTransform.localScale = midScale;
+
+        elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            targetTransform.localScale = Vector3.Lerp(midScale, endScale, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        targetTransform.localScale = endScale;
     }
 }
