@@ -159,11 +159,10 @@ public class Unit : MonoBehaviour
         if (targetUnit == null || targetUnit.UnitHealth.HP <= 0 || isAttacking) return;
         isAttacking = true;
 
-        // LookAtTarget();
+        LookAtTarget();
 
         if (animator != null) animator.SetTrigger("Attack");
 
-        // Bắt đầu Coroutine để đồng bộ effect và damage
         StartCoroutine(AttackSequence());
     }
 
@@ -171,7 +170,6 @@ public class Unit : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         PlayAttackEffect();
-        // yield return new WaitForSeconds(0.3666f);
         yield return new WaitForSeconds(0.7333f);
         DealDamage();
         isAttacking = false;
@@ -187,7 +185,10 @@ public class Unit : MonoBehaviour
                 attackEffectPrefab = warriorAttackEffectPrefab;
                 if (attackEffectPrefab != null && targetUnit != null)
                 {
-                    GameObject effect = Instantiate(attackEffectPrefab, positionWarriorHitEffect.transform.position, Quaternion.Euler(0, 180, 0));
+                    Vector3 direction = targetUnit.transform.position - transform.position;
+                    direction.y = 0;
+                    Quaternion rotation = Quaternion.LookRotation(direction);
+                    GameObject effect = Instantiate(attackEffectPrefab, positionWarriorHitEffect.transform.position, rotation);
                     Destroy(effect, 1f);
                 }
                 break;
@@ -196,8 +197,7 @@ public class Unit : MonoBehaviour
                 attackEffectPrefab = archerAttackEffectPrefab;
                 if (attackEffectPrefab != null && targetUnit != null)
                 {
-                    // GameObject effectAtTarget = Instantiate(attackEffectPrefab, targetUnit.transform.position, Quaternion.identity);
-                    // Destroy(effectAtTarget, 1f);
+
                     Vector3 direction = targetUnit.transform.position - transform.position;
                     direction.y = 0;
                     Quaternion rotation = Quaternion.LookRotation(direction);

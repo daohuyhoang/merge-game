@@ -172,7 +172,7 @@ Transform:
   m_GameObject: {fileID: 250722344571295094}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -72, z: 0}
+  m_LocalPosition: {x: -0, y: -115, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -411,7 +411,7 @@ MonoBehaviour:
   attackRange: 50
   moveSpeed: 3
   warriorAttackEffectPrefab: {fileID: 0}
-  archerAttackEffectPrefab: {fileID: 6823302871133167919, guid: 3138a83bedbd6ad4481ba0b061da2eb6,
+  archerAttackEffectPrefab: {fileID: 8145502431507700120, guid: 000832214335ffd4782827d2a4510f4a,
     type: 3}
   positionArcherHitEffect: {fileID: 7416466980059508318}
   positionWarriorHitEffect: {fileID: 0}
