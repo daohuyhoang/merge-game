@@ -61,6 +61,8 @@ public class UnitDragHandler : MonoBehaviour
 
     private void OnPointerDown(Vector3 pointerPosition)
     {
+        if (gameObject.CompareTag("Enemy")) return;
+
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100f))
         {

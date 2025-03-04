@@ -27,7 +27,7 @@ public class ObjectPool : MonoBehaviour
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
             for (int i = 0; i < pool.size; i++)
-            {
+            {   
                 foreach (var prefab in pool.prefabs)
                 {
                     GameObject obj = Instantiate(prefab);

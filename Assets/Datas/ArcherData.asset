@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd686f93a6177924da659a566be0e1bc, type: 3}
   m_Name: ArcherData
   m_EditorClassIdentifier: 
-  unitName: Archer
   unitType: 1
   maxLevel: 10
   hpByLevel: 0a00000018000000340000007800000018010000a8020000dc05000060090000841c0000803e0000

@@ -11,7 +11,6 @@ public class SpinRewardSystem : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private TMP_Text rewardText;
     [SerializeField] private TMP_Text resultText;
-    [SerializeField] private TMP_Text levelText;
     [SerializeField] private Transform spinWheel;
 
     private float[] rewardAngles = { 0f, 179.993f, 45f, 224.993f, 90f, 269.993f, 134.993f, 314.993f };
@@ -21,7 +20,6 @@ public class SpinRewardSystem : MonoBehaviour
     private int rewardMultiplier;
     private bool isSpinning = false;
     private int reward;
-    private int currentLevel = 1;
 
     public static SpinRewardSystem Instance { get; private set; }
 
@@ -42,7 +40,6 @@ public class SpinRewardSystem : MonoBehaviour
         spinButton.onClick.AddListener(StartSpin);
         continueButton.onClick.AddListener(OnContinueButtonClicked);
         continueButton.gameObject.SetActive(false);
-        UpdateLevelText();
     }
 
     public void AddToTotalDamageDealt(int damageDealt)
@@ -125,21 +122,13 @@ public class SpinRewardSystem : MonoBehaviour
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(nextSceneIndex);
-            currentLevel++;
-            UpdateLevelText();
         }
         else
         {
             SceneManager.LoadScene(0);
-            currentLevel = 1;
-            UpdateLevelText();
         }
         
         CoinManager.Instance.UpdateCoinUI();
     }
-
-    private void UpdateLevelText()
-    {
-        levelText.text = $"Level: {currentLevel}";
-    }
+    
 }

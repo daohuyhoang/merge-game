@@ -42,6 +42,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private Transform positionWarriorHitEffect;
     [SerializeField] private AudioClip warriorAttackSound;
     [SerializeField] private AudioClip archerAttackSound;
+    [SerializeField] private GameObject projectilePrefab;
 
     private void Awake()
     {
@@ -177,9 +178,17 @@ public class Unit : MonoBehaviour
         if (isAttacking)
         {
             PlayAttackSound();
+
+            if (unitType == UnitTypeEnum.Archer)
+            {
+                ShootProjectile();
+            }
+            else if (unitType == UnitTypeEnum.Warrior)
+            {
+                DealDamage();
+            }
         }
         yield return new WaitForSeconds(0.7333f);
-        DealDamage();
         isAttacking = false;
     }
 
@@ -212,6 +221,14 @@ public class Unit : MonoBehaviour
 
                     GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, rotation);
                     Destroy(effectAtArcher, 1f);
+                    
+                    GameObject projectile = WeaponPool.Instance.SpawnFromPool("Projectile", positionArcherHitEffect.position, rotation);
+                    Projectile projectileScript = projectile.GetComponent<Projectile>();
+                    if (projectile != null)
+                    {
+                        projectileScript.targetUnit = targetUnit;
+                        projectileScript.damage = ATK;
+                    }
                 }
                 break;
         }
@@ -252,6 +269,8 @@ public class Unit : MonoBehaviour
 
     private void DealDamage()
     {
+        if (unitType != UnitTypeEnum.Warrior) return;
+        
         if (targetUnit == null || targetUnit.UnitHealth.HP <= 0) return;
 
         float distanceToTarget = Vector3.Distance(transform.position, targetUnit.transform.position);
@@ -260,6 +279,22 @@ public class Unit : MonoBehaviour
         {
             targetUnit.UnitHealth.TakeDamage(ATK);
             Debug.Log("Dealt damage!");
+        }
+    }
+    
+    private void ShootProjectile()
+    {
+        if (targetUnit == null) return;
+
+        Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+
+        GameObject projectile = WeaponPool.Instance.SpawnFromPool("Projectile", positionArcherHitEffect.position, rotation);
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        if (projectileScript != null)
+        {
+            projectileScript.targetUnit = targetUnit;
+            projectileScript.damage = ATK;
         }
     }
 
