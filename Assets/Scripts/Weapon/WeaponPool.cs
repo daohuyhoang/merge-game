@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,52 +5,54 @@ public class WeaponPool : MonoBehaviour
 {
     public static WeaponPool Instance;
 
-    [System.Serializable]
-    public class Pool
-    {
-        public string tag;
-        public GameObject prefab;
-        public int size;
-    }
+    public GameObject projectilePrefab;
+    public int poolSize = 10;
 
-    public List<Pool> pools;
-    public Dictionary<string, Queue<GameObject>> PoolDictionary;
+    private Queue<GameObject> projectilePool;
 
     private void Awake()
     {
         Instance = this;
-        PoolDictionary = new Dictionary<string, Queue<GameObject>>();
+        InitializePool();
+    }
 
-        foreach (Pool pool in pools)
+    private void InitializePool()
+    {
+        projectilePool = new Queue<GameObject>();
+
+        for (int i = 0; i < poolSize; i++)
         {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-            for (int i = 0; i < pool.size; i++)
-            {
-                GameObject obj = Instantiate(pool.prefab);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-
-            PoolDictionary.Add(pool.tag, objectPool);
+            GameObject projectile = Instantiate(projectilePrefab);
+            projectile.SetActive(false);
+            projectilePool.Enqueue(projectile);
         }
     }
-    
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+
+    public GameObject SpawnProjectile(Vector3 position, Quaternion rotation)
     {
-        if (!PoolDictionary.ContainsKey(tag))
+        if (projectilePool.Count == 0)
         {
-            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            Debug.LogWarning("Projectile pool is empty! Consider increasing pool size.");
             return null;
         }
 
-        GameObject objectToSpawn = PoolDictionary[tag].Dequeue();
+        GameObject projectile = projectilePool.Dequeue();
 
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
+        projectile.SetActive(true);
+        projectile.transform.position = position;
+        projectile.transform.rotation = rotation;
 
-        PoolDictionary[tag].Enqueue(objectToSpawn);
+        projectilePool.Enqueue(projectile);
 
-        return objectToSpawn;
+        return projectile;
+    }
+
+    public void ReturnProjectileToPool(Projectile projectile)
+    {
+        if (projectile != null)
+        {
+            projectile.gameObject.SetActive(false);
+            projectilePool.Enqueue(projectile.gameObject);
+        }
     }
 }

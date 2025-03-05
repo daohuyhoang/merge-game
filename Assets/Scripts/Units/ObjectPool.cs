@@ -84,4 +84,14 @@ public class ObjectPool : MonoBehaviour
         }
         return true;
     }
+    
+    public bool HasNextLevel(Unit.UnitTypeEnum unitType, int currentLevel)
+    {
+        if (!poolDictionary.ContainsKey(unitType))
+        {
+            return false;
+        }
+
+        return poolDictionary[unitType].Any(obj => obj.GetComponent<Unit>().UnitLevel == currentLevel + 1 && !obj.activeInHierarchy);
+    }
 }

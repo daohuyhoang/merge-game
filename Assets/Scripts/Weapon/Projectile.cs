@@ -8,17 +8,16 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        if (targetUnit != null)
+        if (targetUnit == null || targetUnit.UnitHealth.HP <= 0)
         {
-            Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
+            ReturnToPool();
+            return;
+        }
+        
+        Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
+        transform.position += direction * speed * Time.deltaTime;
 
-            transform.rotation = Quaternion.LookRotation(direction);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        transform.rotation = Quaternion.LookRotation(direction);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +28,7 @@ public class Projectile : MonoBehaviour
             if (enemyUnit != null && enemyUnit == targetUnit)
             {
                 HitTarget();
-            }   
+            }
         }
     }
 
@@ -39,6 +38,12 @@ public class Projectile : MonoBehaviour
         {
             targetUnit.UnitHealth.TakeDamage(damage);
         }
-        Destroy(gameObject);
+        ReturnToPool();
+    }
+
+    private void ReturnToPool()
+    {
+        gameObject.SetActive(false);
+        WeaponPool.Instance.ReturnProjectileToPool(this);
     }
 }

@@ -20,8 +20,11 @@ public class UnitMergeHandler : MonoBehaviour
         if (unitA == unitB) return false;
         if (unitA.UnitType == unitB.UnitType && unitA.UnitLevel == unitB.UnitLevel)
         {
-            MergeUnits(unitA, unitB);
-            return true;
+            if (ObjectPool.Instance.HasNextLevel(unitA.UnitType, unitA.UnitLevel))
+            {
+                MergeUnits(unitA, unitB);
+                return true;
+            }
         }
         return false;
     }
@@ -70,9 +73,9 @@ public class UnitMergeHandler : MonoBehaviour
         float duration = 0.5f;
         float elapsedTime = 0f;
 
-        Vector3 startScale = new Vector3(0.8f, 0.8f, 0.8f);
-        Vector3 midScale = new Vector3(1.2f, 1.2f, 1.2f);
-        Vector3 endScale = Vector3.one;
+        Vector3 startScale = new Vector3(1.3f, 1.3f, 1.3f);
+        Vector3 midScale = new Vector3(1.7f, 1.7f, 1.7f);
+        Vector3 endScale = new Vector3(1.5f, 1.5f, 1.5f);
 
         while (elapsedTime < duration)
         {

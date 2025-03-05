@@ -34,14 +34,11 @@ public class Unit : MonoBehaviour
     private Animator animator;
     private CheckVictory checkVictory;
     private int totalDamageDealt;
-    private AudioSource audioSource;
 
     [SerializeField] private GameObject warriorAttackEffectPrefab;
     [SerializeField] private GameObject archerAttackEffectPrefab;
     [SerializeField] private Transform positionArcherHitEffect;
     [SerializeField] private Transform positionWarriorHitEffect;
-    [SerializeField] private AudioClip warriorAttackSound;
-    [SerializeField] private AudioClip archerAttackSound;
     [SerializeField] private GameObject projectilePrefab;
 
     private void Awake()
@@ -49,7 +46,6 @@ public class Unit : MonoBehaviour
         UnitHealth = GetComponent<UnitHealth>();
         checkVictory = GetComponent<CheckVictory>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -173,12 +169,10 @@ public class Unit : MonoBehaviour
 
     private IEnumerator AttackSequence()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         PlayAttackEffect();
         if (isAttacking)
         {
-            PlayAttackSound();
-
             if (unitType == UnitTypeEnum.Archer)
             {
                 ShootProjectile();
@@ -188,7 +182,7 @@ public class Unit : MonoBehaviour
                 DealDamage();
             }
         }
-        yield return new WaitForSeconds(0.7333f);
+        yield return new WaitForSeconds(0.6333f);
         isAttacking = false;
     }
 
@@ -214,7 +208,6 @@ public class Unit : MonoBehaviour
                 attackEffectPrefab = archerAttackEffectPrefab;
                 if (attackEffectPrefab != null && targetUnit != null)
                 {
-
                     Vector3 direction = targetUnit.transform.position - transform.position;
                     direction.y = 0;
                     Quaternion rotation = Quaternion.LookRotation(direction);
@@ -222,7 +215,7 @@ public class Unit : MonoBehaviour
                     GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, rotation);
                     Destroy(effectAtArcher, 1f);
                     
-                    GameObject projectile = WeaponPool.Instance.SpawnFromPool("Projectile", positionArcherHitEffect.position, rotation);
+                    GameObject projectile = WeaponPool.Instance.SpawnProjectile(positionArcherHitEffect.position, rotation);
                     Projectile projectileScript = projectile.GetComponent<Projectile>();
                     if (projectile != null)
                     {
@@ -233,30 +226,7 @@ public class Unit : MonoBehaviour
                 break;
         }
     }
-    
-    private void PlayAttackSound()
-    {
-        if (audioSource != null)
-        {
-            switch (unitType)
-            {
-                case UnitTypeEnum.Warrior:
-                    if (warriorAttackSound != null)
-                    {
-                        audioSource.PlayOneShot(warriorAttackSound);
-                    }
-                    break;
 
-                case UnitTypeEnum.Archer:
-                    if (archerAttackSound != null)
-                    {
-                        audioSource.PlayOneShot(archerAttackSound);
-                    }
-                    break;
-            }
-        }
-    }
-    
     private void LookAtTarget()
     {
         if (targetUnit != null)
@@ -289,7 +259,7 @@ public class Unit : MonoBehaviour
         Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
         Quaternion rotation = Quaternion.LookRotation(direction);
 
-        GameObject projectile = WeaponPool.Instance.SpawnFromPool("Projectile", positionArcherHitEffect.position, rotation);
+        GameObject projectile = WeaponPool.Instance.SpawnProjectile(positionArcherHitEffect.position, rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
         if (projectileScript != null)
         {
