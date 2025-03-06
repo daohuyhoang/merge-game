@@ -139,6 +139,8 @@ public class SpinRewardSystem : MonoBehaviour
 
     private void LoadNextScene()
     {
+        LevelManager.Instance.IncreaseLevel();
+
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
 
