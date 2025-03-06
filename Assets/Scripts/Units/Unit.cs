@@ -150,7 +150,6 @@ public class Unit : MonoBehaviour
         LookAtTarget();
         animator.SetBool("Run", true);
         animator.SetBool("Attack", false);
-        
 
         Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
@@ -162,28 +161,21 @@ public class Unit : MonoBehaviour
         isAttacking = true;
 
         LookAtTarget();
-
+        if (animator != null  && UnitType == UnitTypeEnum.Archer) animator.SetTrigger("Start");
         if (animator != null) animator.SetTrigger("Attack");
-
-        StartCoroutine(AttackSequence());
     }
-
-    private IEnumerator AttackSequence()
+    
+    public void OnAttackHit()
     {
-        yield return new WaitForSeconds(0.6f);
-        PlayAttackEffect();
-        if (isAttacking)
+        if (unitType == UnitTypeEnum.Archer)
         {
-            if (unitType == UnitTypeEnum.Archer)
-            {
-                ShootProjectile();
-            }
-            else if (unitType == UnitTypeEnum.Warrior)
-            {
-                DealDamage();
-            }
+            ShootProjectile();
         }
-        yield return new WaitForSeconds(0.6333f);
+        else if (unitType == UnitTypeEnum.Warrior)
+        {
+            DealDamage();
+        }
+
         isAttacking = false;
     }
 
@@ -215,14 +207,6 @@ public class Unit : MonoBehaviour
 
                     GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, rotation);
                     Destroy(effectAtArcher, 1f);
-                    
-                    GameObject projectile = WeaponPool.Instance.SpawnProjectile(tagProjectile, positionArcherHitEffect.position, rotation);
-                    Projectile projectileScript = projectile.GetComponent<Projectile>();
-                    if (projectile != null)
-                    {
-                        projectileScript.targetUnit = targetUnit;
-                        projectileScript.damage = ATK;
-                    }
                 }
                 break;
         }
@@ -241,7 +225,7 @@ public class Unit : MonoBehaviour
     private void DealDamage()
     {
         if (unitType != UnitTypeEnum.Warrior) return;
-        
+    
         if (targetUnit == null || targetUnit.UnitHealth.HP <= 0) return;
 
         float distanceToTarget = Vector3.Distance(transform.position, targetUnit.transform.position);
@@ -250,6 +234,12 @@ public class Unit : MonoBehaviour
         {
             targetUnit.UnitHealth.TakeDamage(ATK);
             Debug.Log("Dealt damage!");
+
+            if (targetUnit.UnitHealth.HP <= 0)
+            {
+                targetUnit = null;
+                isAttacking = false;
+            }
         }
     }
     
