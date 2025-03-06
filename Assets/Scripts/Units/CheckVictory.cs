@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CheckVictory : MonoBehaviour
 {
@@ -17,6 +16,7 @@ public class CheckVictory : MonoBehaviour
         {
             BattleManager.Instance.ResetCameraFOV();
             unit.VictoryAnimation();
+            BattleManager.Instance.PlayEnemyWinSound();
             StartCoroutine(ShowRewardOnDefeat());
         }
     }
@@ -27,6 +27,7 @@ public class CheckVictory : MonoBehaviour
         {
             BattleManager.Instance.ResetCameraFOV();
             unit.VictoryAnimation();
+            BattleManager.Instance.PlayPlayerWinSound();
             StartCoroutine(ShowSpinAfterDelay(1f));
         }
     }

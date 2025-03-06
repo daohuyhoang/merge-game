@@ -6,15 +6,27 @@ public class BattleButton : MonoBehaviour
     [SerializeField] private Button battleButton;
     [SerializeField] private Canvas buttonCanvas;
 
+    [SerializeField] private AudioClip battleButtonSound;
+    private AudioSource audioSource;
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         if (battleButton == null)
         {
             Debug.LogError("Battle Button is not assigned!");
             return;
         }
 
-        battleButton.onClick.AddListener(StartBattle);
+        battleButton.onClick.AddListener(OnBattleButtonClick);
+    }
+
+    private void OnBattleButtonClick()
+    {
+        PlayBattleButtonSound();
+
+        StartBattle();
     }
 
     private void StartBattle()
@@ -36,6 +48,14 @@ public class BattleButton : MonoBehaviour
         if (buttonCanvas != null)
         {
             buttonCanvas.gameObject.SetActive(false);
+        }
+    }
+
+    private void PlayBattleButtonSound()
+    {
+        if (audioSource != null && battleButtonSound != null)
+        {
+            audioSource.PlayOneShot(battleButtonSound);
         }
     }
 }

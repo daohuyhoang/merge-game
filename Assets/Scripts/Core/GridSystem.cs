@@ -11,14 +11,27 @@ public class GridSystem : MonoBehaviour
     [SerializeField] private TMP_Text warriorCostText;
     [SerializeField] private TMP_Text archerCostText;
 
+    [SerializeField] private AudioClip warriorButtonSound;
+    [SerializeField] private AudioClip archerButtonSound;
+    private AudioSource audioSource;
+
     private string TEAM_TAG = "Player";
 
     private void Start()
     {
-        warriorButton.onClick.AddListener(() => SpawnUnit(Unit.UnitTypeEnum.Warrior, TEAM_TAG));
-        archerButton.onClick.AddListener(() => SpawnUnit(Unit.UnitTypeEnum.Archer, TEAM_TAG));
+        audioSource = GetComponent<AudioSource>();
+
+        warriorButton.onClick.AddListener(() => OnButtonClick(Unit.UnitTypeEnum.Warrior, TEAM_TAG));
+        archerButton.onClick.AddListener(() => OnButtonClick(Unit.UnitTypeEnum.Archer, TEAM_TAG));
 
         UpdateCostTexts();
+    }
+
+    private void OnButtonClick(Unit.UnitTypeEnum unitType, string teamTag)
+    {
+        PlayButtonSound(unitType);
+
+        SpawnUnit(unitType, teamTag);
     }
 
     private void SpawnUnit(Unit.UnitTypeEnum unitType, string teamTag)
@@ -106,5 +119,20 @@ public class GridSystem : MonoBehaviour
 
         warriorCostText.text = warriorCost == 0 ? "0" : $"{warriorCost}";
         archerCostText.text = archerCost == 0 ? "0" : $"{archerCost}";
+    }
+
+    private void PlayButtonSound(Unit.UnitTypeEnum unitType)
+    {
+        if (audioSource != null)
+        {
+            if (unitType == Unit.UnitTypeEnum.Warrior && warriorButtonSound != null)
+            {
+                audioSource.PlayOneShot(warriorButtonSound);
+            }
+            else if (unitType == Unit.UnitTypeEnum.Archer && archerButtonSound != null)
+            {
+                audioSource.PlayOneShot(archerButtonSound);
+            }
+        }
     }
 }

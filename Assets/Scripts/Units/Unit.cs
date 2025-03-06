@@ -39,11 +39,16 @@ public class Unit : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private string tagProjectile;
 
+    [SerializeField] private AudioClip warriorAttackSound;
+    [SerializeField] private AudioClip archerAttackSound;
+    private AudioSource audioSource;
+
     private void Awake()
     {
         UnitHealth = GetComponent<UnitHealth>();
         checkVictory = GetComponent<CheckVictory>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -167,10 +172,12 @@ public class Unit : MonoBehaviour
         if (unitType == UnitTypeEnum.Archer)
         {
             ShootProjectile();
+            PlaySound(archerAttackSound);
         }
         else if (unitType == UnitTypeEnum.Warrior)
         {
             DealDamage();
+            PlaySound(warriorAttackSound);
         }
 
         isAttacking = false;
@@ -220,6 +227,14 @@ public class Unit : MonoBehaviour
         {
             projectileScript.targetUnit = targetUnit;
             projectileScript.damage = ATK;
+        }
+    }
+
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
         }
     }
 
