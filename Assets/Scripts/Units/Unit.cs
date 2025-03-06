@@ -35,10 +35,7 @@ public class Unit : MonoBehaviour
     private CheckVictory checkVictory;
     private int totalDamageDealt;
 
-    [SerializeField] private GameObject warriorAttackEffectPrefab;
-    [SerializeField] private GameObject archerAttackEffectPrefab;
     [SerializeField] private Transform positionArcherHitEffect;
-    [SerializeField] private Transform positionWarriorHitEffect;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private string tagProjectile;
 
@@ -177,39 +174,6 @@ public class Unit : MonoBehaviour
         }
 
         isAttacking = false;
-    }
-
-    private void PlayAttackEffect()
-    {
-        GameObject attackEffectPrefab = null;
-
-        switch (unitType)
-        {
-            case UnitTypeEnum.Warrior:
-                attackEffectPrefab = warriorAttackEffectPrefab;
-                if (attackEffectPrefab != null && targetUnit != null)
-                {
-                    Vector3 direction = targetUnit.transform.position - transform.position;
-                    direction.y = 0;
-                    Quaternion rotation = Quaternion.LookRotation(direction);
-                    GameObject effect = Instantiate(attackEffectPrefab, positionWarriorHitEffect.transform.position, rotation);
-                    Destroy(effect, 1f);
-                }
-                break;
-
-            case UnitTypeEnum.Archer:
-                attackEffectPrefab = archerAttackEffectPrefab;
-                if (attackEffectPrefab != null && targetUnit != null)
-                {
-                    Vector3 direction = targetUnit.transform.position - transform.position;
-                    direction.y = 0;
-                    Quaternion rotation = Quaternion.LookRotation(direction);
-
-                    GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, rotation);
-                    Destroy(effectAtArcher, 1f);
-                }
-                break;
-        }
     }
 
     private void LookAtTarget()
