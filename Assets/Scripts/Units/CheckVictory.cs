@@ -17,7 +17,7 @@ public class CheckVictory : MonoBehaviour
         {
             BattleManager.Instance.ResetCameraFOV();
             unit.VictoryAnimation();
-            RestartCurrentScene();
+            StartCoroutine(ShowRewardOnDefeat());
         }
     }
 
@@ -35,12 +35,12 @@ public class CheckVictory : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         SpinRewardSystem.Instance.ShowSpinPanel();
-        SpinRewardSystem.Instance.SetResultText("Victory!");
+        SpinRewardSystem.Instance.SetResultText("VICTORY!");
     }
 
-    private void RestartCurrentScene()
+    private IEnumerator ShowRewardOnDefeat()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        yield return new WaitForSeconds(1f);
+        SpinRewardSystem.Instance.ShowRewardOnDefeat();
     }
 }

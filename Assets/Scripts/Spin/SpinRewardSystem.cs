@@ -20,6 +20,7 @@ public class SpinRewardSystem : MonoBehaviour
     private int rewardMultiplier;
     private bool isSpinning = false;
     private int reward;
+    private bool isWin = false;
 
     public static SpinRewardSystem Instance { get; private set; }
 
@@ -51,7 +52,18 @@ public class SpinRewardSystem : MonoBehaviour
     {
         spinPanel.SetActive(true);
     }
-    
+
+    public void ShowRewardOnDefeat()
+    {
+        spinPanel.SetActive(true);
+        reward = totalDamageDealt;
+        rewardText.text = $"YOU EARNED: +{reward}";
+        resultText.text = "DEFEAT!";
+        continueButton.gameObject.SetActive(true);
+        spinButton.gameObject.SetActive(false);
+        isWin = false;
+    }
+
     public void SetResultText(string text)
     {
         resultText.text = text;
@@ -97,12 +109,22 @@ public class SpinRewardSystem : MonoBehaviour
         continueButton.gameObject.SetActive(true);
 
         isSpinning = false;
+        isWin = true;
     }
 
     private void OnContinueButtonClicked()
     {
         CoinManager.Instance.AddCoin(reward);
-        SaveAndLoadNextScene();
+
+        if (isWin)
+        {
+            LoadNextScene();
+        }
+        else
+        {
+            RestartCurrentScene();
+        }
+
         HideSpinPanel();
     }
 
@@ -111,10 +133,11 @@ public class SpinRewardSystem : MonoBehaviour
         spinPanel.SetActive(false);
         continueButton.gameObject.SetActive(false);
         spinButton.interactable = true;
+        spinButton.gameObject.SetActive(true);
         totalDamageDealt = 0;
     }
-    
-    private void SaveAndLoadNextScene()
+
+    private void LoadNextScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
@@ -127,8 +150,13 @@ public class SpinRewardSystem : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
-        
+
         CoinManager.Instance.UpdateCoinUI();
     }
-    
+
+    private void RestartCurrentScene()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
+    }
 }
