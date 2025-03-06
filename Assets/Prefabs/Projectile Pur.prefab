@@ -5012,6 +5012,8 @@ MonoBehaviour:
   speed: 20
   damage: 10
   targetUnit: {fileID: 0}
+  hitEffectPrefab: {fileID: 484368387861551534, guid: 24825ddb8cae4d54c903d254d08f6187,
+    type: 3}
 --- !u!54 &5616118730832976670
 Rigidbody:
   m_ObjectHideFlags: 0

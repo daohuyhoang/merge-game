@@ -6,6 +6,8 @@ public class Projectile : MonoBehaviour
     public int damage = 10;
     public Unit targetUnit;
 
+    [SerializeField] private ParticleSystem hitEffectPrefab;
+
     private void Update()
     {
         if (targetUnit == null || targetUnit.UnitHealth.HP <= 0)
@@ -37,6 +39,15 @@ public class Projectile : MonoBehaviour
         if (targetUnit != null)
         {
             targetUnit.UnitHealth.TakeDamage(damage);
+
+            if (hitEffectPrefab != null)
+            {
+                Vector3 spawnPosition = targetUnit.transform.position;
+                spawnPosition.y += 1f;
+                ParticleSystem hitEffect = Instantiate(hitEffectPrefab, spawnPosition, Quaternion.identity);
+                hitEffect.Play();
+                Destroy(hitEffect.gameObject, hitEffect.main.duration);
+            }
         }
         ReturnToPool();
     }

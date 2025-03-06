@@ -73,9 +73,11 @@ public class UnitMergeHandler : MonoBehaviour
         float duration = 0.5f;
         float elapsedTime = 0f;
 
-        Vector3 startScale = new Vector3(1.3f, 1.3f, 1.3f);
-        Vector3 midScale = new Vector3(1.7f, 1.7f, 1.7f);
-        Vector3 endScale = new Vector3(1.5f, 1.5f, 1.5f);
+        Vector3 currentScale = targetTransform.localScale;
+
+        Vector3 startScale = currentScale - new Vector3(0.2f, 0.2f, 0.2f);
+        Vector3 midScale = currentScale + new Vector3(0.2f, 0.2f, 0.2f);
+        Vector3 endScale = currentScale;
 
         while (elapsedTime < duration)
         {
