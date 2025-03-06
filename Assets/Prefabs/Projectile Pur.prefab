@@ -4904,7 +4904,7 @@ GameObject:
   - component: {fileID: 5616118730832976670}
   m_Layer: 0
   m_Name: Projectile Pur
-  m_TagString: Projectile
+  m_TagString: Projectile Pur
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5011,6 +5011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   damage: 10
+  tag: Projectile Pur
   targetUnit: {fileID: 0}
   hitEffectPrefab: {fileID: 484368387861551534, guid: 24825ddb8cae4d54c903d254d08f6187,
     type: 3}

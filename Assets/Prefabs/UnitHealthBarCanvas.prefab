@@ -133,6 +133,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitHealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 1780918864223914625, guid: fecf6a77d336fd247a1173b281013413,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -10.39999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780918864223914625, guid: fecf6a77d336fd247a1173b281013413,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20000458
+      objectReference: {fileID: 0}
     - target: {fileID: 7178717778407698137, guid: fecf6a77d336fd247a1173b281013413,
         type: 3}
       propertyPath: m_AnchorMax.y

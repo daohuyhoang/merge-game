@@ -2549,7 +2549,7 @@ GameObject:
   - component: {fileID: 2078399675}
   m_Layer: 0
   m_Name: WeaponPool
-  m_TagString: Projectile
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2566,9 +2566,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3680d76e65ad03f418f10d7c4dffefa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2068908948024016475, guid: facf1ae8ea645134faee1ab32fbc98ac,
-    type: 3}
-  poolSize: 30
+  pools:
+  - tag: Projectile Pur
+    prefab: {fileID: 2068908948024016475, guid: facf1ae8ea645134faee1ab32fbc98ac,
+      type: 3}
+    size: 30
+  - tag: Projectile
+    prefab: {fileID: 2068908948024016475, guid: 21a70765a19ba3d45979bf0033860464,
+      type: 3}
+    size: 30
 --- !u!4 &2078399676
 Transform:
   m_ObjectHideFlags: 0

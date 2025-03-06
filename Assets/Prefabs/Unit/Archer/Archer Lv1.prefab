@@ -401,10 +401,9 @@ MonoBehaviour:
   archerAttackEffectPrefab: {fileID: 0}
   positionArcherHitEffect: {fileID: 4758842887634713228}
   positionWarriorHitEffect: {fileID: 0}
-  warriorAttackSound: {fileID: 0}
-  archerAttackSound: {fileID: 0}
   projectilePrefab: {fileID: 2068908948024016475, guid: facf1ae8ea645134faee1ab32fbc98ac,
     type: 3}
+  tagProjectile: Projectile Pur
 --- !u!114 &-3152641982979799619
 MonoBehaviour:
   m_ObjectHideFlags: 0

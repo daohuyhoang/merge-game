@@ -5,34 +5,50 @@ public class WeaponPool : MonoBehaviour
 {
     public static WeaponPool Instance;
 
-    public GameObject projectilePrefab;
-    public int poolSize = 10;
+    [System.Serializable]
+    public class Pool
+    {
+        public string tag;
+        public GameObject prefab;
+        public int size;
+    }
 
-    private Queue<GameObject> projectilePool;
+    public List<Pool> pools;
+    private Dictionary<string, Queue<GameObject>> poolDictionary;
 
     private void Awake()
     {
         Instance = this;
-        InitializePool();
-    }
+        poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
-    private void InitializePool()
-    {
-        projectilePool = new Queue<GameObject>();
-
-        for (int i = 0; i < poolSize; i++)
+        foreach (Pool pool in pools)
         {
-            GameObject projectile = Instantiate(projectilePrefab);
-            projectile.SetActive(false);
-            projectilePool.Enqueue(projectile);
+            Queue<GameObject> objectPool = new Queue<GameObject>();
+
+            for (int i = 0; i < pool.size; i++)
+            {
+                GameObject projectile = Instantiate(pool.prefab);
+                projectile.SetActive(false);
+                objectPool.Enqueue(projectile);
+            }
+
+            poolDictionary.Add(pool.tag, objectPool);
         }
     }
 
-    public GameObject SpawnProjectile(Vector3 position, Quaternion rotation)
+    public GameObject SpawnProjectile(string tag, Vector3 position, Quaternion rotation)
     {
+        if (!poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
+            return null;
+        }
+
+        Queue<GameObject> projectilePool = poolDictionary[tag];
+
         if (projectilePool.Count == 0)
         {
-            Debug.LogWarning("Projectile pool is empty! Consider increasing pool size.");
+            Debug.LogWarning($"Pool with tag {tag} is empty! Consider increasing pool size.");
             return null;
         }
 
@@ -47,12 +63,16 @@ public class WeaponPool : MonoBehaviour
         return projectile;
     }
 
-    public void ReturnProjectileToPool(Projectile projectile)
+    public void ReturnProjectileToPool(string tag, GameObject projectile)
     {
-        if (projectile != null)
+        if (poolDictionary.ContainsKey(tag))
         {
-            projectile.gameObject.SetActive(false);
-            projectilePool.Enqueue(projectile.gameObject);
+            projectile.SetActive(false);
+            poolDictionary[tag].Enqueue(projectile);
+        }
+        else
+        {
+            Debug.LogWarning($"Pool with tag {tag} doesn't exist.");
         }
     }
 }

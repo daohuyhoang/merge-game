@@ -40,6 +40,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private Transform positionArcherHitEffect;
     [SerializeField] private Transform positionWarriorHitEffect;
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private string tagProjectile;
 
     private void Awake()
     {
@@ -215,7 +216,7 @@ public class Unit : MonoBehaviour
                     GameObject effectAtArcher = Instantiate(attackEffectPrefab, positionArcherHitEffect.position, rotation);
                     Destroy(effectAtArcher, 1f);
                     
-                    GameObject projectile = WeaponPool.Instance.SpawnProjectile(positionArcherHitEffect.position, rotation);
+                    GameObject projectile = WeaponPool.Instance.SpawnProjectile(tagProjectile, positionArcherHitEffect.position, rotation);
                     Projectile projectileScript = projectile.GetComponent<Projectile>();
                     if (projectile != null)
                     {
@@ -259,7 +260,7 @@ public class Unit : MonoBehaviour
         Vector3 direction = (targetUnit.transform.position - transform.position).normalized;
         Quaternion rotation = Quaternion.LookRotation(direction);
 
-        GameObject projectile = WeaponPool.Instance.SpawnProjectile(positionArcherHitEffect.position, rotation);
+        GameObject projectile = WeaponPool.Instance.SpawnProjectile(tagProjectile, positionArcherHitEffect.position, rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
         if (projectileScript != null)
         {

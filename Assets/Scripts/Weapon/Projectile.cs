@@ -4,6 +4,7 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 10f;
     public int damage = 10;
+    public string tag;
     public Unit targetUnit;
 
     [SerializeField] private ParticleSystem hitEffectPrefab;
@@ -55,6 +56,6 @@ public class Projectile : MonoBehaviour
     private void ReturnToPool()
     {
         gameObject.SetActive(false);
-        WeaponPool.Instance.ReturnProjectileToPool(this);
+        WeaponPool.Instance.ReturnProjectileToPool(tag, this.gameObject);
     }
 }
