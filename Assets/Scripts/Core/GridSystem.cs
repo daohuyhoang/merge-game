@@ -117,8 +117,8 @@ public class GridSystem : MonoBehaviour
         int warriorCost = CalculateSpawnCost(Unit.UnitTypeEnum.Warrior);
         int archerCost = CalculateSpawnCost(Unit.UnitTypeEnum.Archer);
 
-        warriorCostText.text = warriorCost == 0 ? "0" : $"{warriorCost}";
-        archerCostText.text = archerCost == 0 ? "0" : $"{archerCost}";
+        warriorCostText.text = warriorCost == 0 ? "0" : $"{CoinManager.Instance.FormatCoin(warriorCost)}";
+        archerCostText.text = archerCost == 0 ? "0" : $"{CoinManager.Instance.FormatCoin(archerCost)}";
     }
 
     private void PlayButtonSound(Unit.UnitTypeEnum unitType)

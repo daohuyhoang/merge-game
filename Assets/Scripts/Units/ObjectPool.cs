@@ -72,7 +72,7 @@ public class ObjectPool : MonoBehaviour
         objectToReturn.SetActive(false);
         poolDictionary[unitType].Enqueue(objectToReturn);
     }
-    
+
     public bool AreAllUnitsInactive()
     {
         foreach (var pool in poolDictionary.Values)

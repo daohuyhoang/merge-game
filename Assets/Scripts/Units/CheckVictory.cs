@@ -9,19 +9,31 @@ public class CheckVictory : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-
     public void ShowPlayerVictory()
     {
         BattleManager.Instance.ResetCameraFOV();
-        unit.VictoryAnimation();
+        FindUnitActive();
         BattleManager.Instance.PlayPlayerWinSound();
         ShowSpin();
     }
-    
+
+    private static void FindUnitActive()
+    {
+        Unit[] activeUnits = FindObjectsOfType<Unit>();
+
+        foreach (Unit activeUnit in activeUnits)
+        {
+            if (activeUnit.UnitHealth.HP > 0)
+            {
+                activeUnit.VictoryAnimation();
+            }
+        }
+    }
+
     public void ShowEnemyVictory()
     {
         BattleManager.Instance.ResetCameraFOV();
-        unit.VictoryAnimation();
+        FindUnitActive();
         BattleManager.Instance.PlayEnemyWinSound();
         ShowRewardOnDefeat();
     }

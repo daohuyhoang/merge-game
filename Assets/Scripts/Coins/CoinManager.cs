@@ -7,7 +7,7 @@ public class CoinManager : MonoBehaviour
     
     public static CoinManager Instance;
 
-    private int totalCoin = 1200;
+    private int totalCoin = 120;
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    private string FormatCoin(int coin)
+    public string FormatCoin(int coin)
     {
         if (coin >= 1000000000)
         {

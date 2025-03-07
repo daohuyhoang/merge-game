@@ -84,12 +84,10 @@ public class BattleManager : MonoBehaviour
 
         if (allEnemiesDead)
         {
-            Debug.Log("Player Victory!");
             HandlePlayerVictory();
         }
         else if (allUnitsInactive)
         {
-            Debug.Log("Enemy Victory!");
             HandleEnemyVictory();
         }
     }
@@ -99,13 +97,12 @@ public class BattleManager : MonoBehaviour
         var winner = ObjectPool.Instance.GetFirstActiveUnit();
         if (winner != null)
         {
-            Debug.Log("Player Victory! Winner: " + winner.gameObject.name);
             winner.GetComponent<CheckVictory>().ShowPlayerVictory();
         }
         else
         {
-            Debug.LogWarning("No active unit found for player victory.");
             ResetCameraFOV();
+            // PlayPlayerWinSound();
             SpinRewardSystem.Instance.ShowSpinPanel();
         }
     }

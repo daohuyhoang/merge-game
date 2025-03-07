@@ -256,13 +256,6 @@ public class Unit : MonoBehaviour
     
     public void VictoryAnimation()
     {
-        if (animator != null)
-        {
-            animator.SetTrigger("Victory");
-        }
-        else
-        {
-            Debug.LogWarning("Animator is not assigned in Unit script.");
-        }
+        if (animator != null) animator.SetTrigger("Victory");
     }
 }
