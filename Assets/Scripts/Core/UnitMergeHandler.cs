@@ -6,13 +6,17 @@ public class UnitMergeHandler : MonoBehaviour
     public static UnitMergeHandler Instance;
 
     [SerializeField] GameObject mergeEffectPrefab;
+    [SerializeField] private AudioClip mergeSound;
 
     private string TEAM_TAG = "Player";
+    private AudioSource audioSource;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     public bool TryMergeUnits(Unit unitA, Unit unitB)
@@ -23,6 +27,7 @@ public class UnitMergeHandler : MonoBehaviour
             if (ObjectPool.Instance.HasNextLevel(unitA.UnitType, unitA.UnitLevel))
             {
                 MergeUnits(unitA, unitB);
+                audioSource.PlayOneShot(mergeSound);
                 return true;
             }
         }
