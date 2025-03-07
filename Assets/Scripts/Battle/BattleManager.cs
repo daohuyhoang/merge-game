@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -5,6 +6,7 @@ public class BattleManager : MonoBehaviour
     public static BattleManager Instance;
 
     private bool isBattleActive = false;
+    private Unit unit;
 
     [SerializeField] private Camera mainCamera;
 
@@ -23,6 +25,11 @@ public class BattleManager : MonoBehaviour
         else Destroy(gameObject);
 
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        unit = GetComponent<Unit>();
     }
 
     public void StartBattle()
@@ -77,10 +84,12 @@ public class BattleManager : MonoBehaviour
 
         if (allEnemiesDead)
         {
+            Debug.Log("Player Victory!");
             HandlePlayerVictory();
         }
         else if (allUnitsInactive)
         {
+            Debug.Log("Enemy Victory!");
             HandleEnemyVictory();
         }
     }
@@ -90,12 +99,13 @@ public class BattleManager : MonoBehaviour
         var winner = ObjectPool.Instance.GetFirstActiveUnit();
         if (winner != null)
         {
+            Debug.Log("Player Victory! Winner: " + winner.gameObject.name);
             winner.GetComponent<CheckVictory>().ShowPlayerVictory();
         }
         else
         {
+            Debug.LogWarning("No active unit found for player victory.");
             ResetCameraFOV();
-            // PlayPlayerWinSound();
             SpinRewardSystem.Instance.ShowSpinPanel();
         }
     }
