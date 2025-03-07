@@ -94,4 +94,17 @@ public class ObjectPool : MonoBehaviour
 
         return poolDictionary[unitType].Any(obj => obj.GetComponent<Unit>().UnitLevel == currentLevel + 1 && !obj.activeInHierarchy);
     }
+    
+    public GameObject GetFirstActiveUnit()
+    {
+        foreach (var pool in poolDictionary.Values)
+        {
+            foreach (var obj in pool)
+            {
+                if (obj.activeInHierarchy) 
+                    return obj;
+            }
+        }
+        return null;
+    }
 }

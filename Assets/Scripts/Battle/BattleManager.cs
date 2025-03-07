@@ -69,4 +69,49 @@ public class BattleManager : MonoBehaviour
             hasEnemyWon = true;
         }
     }
+    
+    public void CheckVictory()
+    {
+        bool allEnemiesDead = EnemyManager.Instance.AreAllEnemiesDead();
+        bool allUnitsInactive = ObjectPool.Instance.AreAllUnitsInactive();
+
+        if (allEnemiesDead)
+        {
+            HandlePlayerVictory();
+        }
+        else if (allUnitsInactive)
+        {
+            HandleEnemyVictory();
+        }
+    }
+    
+    public void HandlePlayerVictory()
+    {
+        var winner = ObjectPool.Instance.GetFirstActiveUnit();
+        if (winner != null)
+        {
+            winner.GetComponent<CheckVictory>().ShowPlayerVictory();
+        }
+        else
+        {
+            ResetCameraFOV();
+            // PlayPlayerWinSound();
+            SpinRewardSystem.Instance.ShowSpinPanel();
+        }
+    }
+
+    public void HandleEnemyVictory()
+    {
+        var winner = EnemyManager.Instance.GetFirstActiveEnemy();
+        if (winner != null)
+        {
+            winner.GetComponent<CheckVictory>().ShowEnemyVictory();
+        }
+        else
+        {
+            ResetCameraFOV();
+            // PlayEnemyWinSound();
+            SpinRewardSystem.Instance.ShowRewardOnDefeat();
+        }
+    }
 }

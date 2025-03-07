@@ -46,4 +46,8 @@ public class EnemyManager : MonoBehaviour
         return enemies.All(enemy => enemy != null && enemy.UnitHealth != null && enemy.UnitHealth.HP <= 0);
     }
 
+    public Unit GetFirstActiveEnemy()
+    {
+        return enemies.FirstOrDefault(enemy => enemy != null && enemy.gameObject.activeInHierarchy);
+    }
 }

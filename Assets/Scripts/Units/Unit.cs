@@ -79,8 +79,6 @@ public class Unit : MonoBehaviour
                     Attack();
                 }
             }
-            checkVictory.CheckForPlayerVictory();
-            checkVictory.CheckForEnemyVictory();
         }
     }
 
@@ -253,6 +251,7 @@ public class Unit : MonoBehaviour
         
         ObjectPool.Instance.ReturnToPool(UnitType, gameObject);
         this.enabled = false;
+        BattleManager.Instance.CheckVictory();
     }
     
     public void VictoryAnimation()

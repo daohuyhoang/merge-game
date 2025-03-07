@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class CheckVictory : MonoBehaviour
@@ -10,38 +9,45 @@ public class CheckVictory : MonoBehaviour
         unit = GetComponent<Unit>();
     }
 
-    public void CheckForEnemyVictory()
+
+    public void ShowPlayerVictory()
     {
-        if (ObjectPool.Instance.AreAllUnitsInactive())
+        BattleManager.Instance.ResetCameraFOV();
+        unit.VictoryAnimation();
+        BattleManager.Instance.PlayPlayerWinSound();
+        ShowSpin();
+    }
+    
+    public void ShowEnemyVictory()
+    {
+        BattleManager.Instance.ResetCameraFOV();
+        unit.VictoryAnimation();
+        BattleManager.Instance.PlayEnemyWinSound();
+        ShowRewardOnDefeat();
+    }
+    
+    private void ShowSpin()
+    {
+        if (SpinRewardSystem.Instance != null)
         {
-            BattleManager.Instance.ResetCameraFOV();
-            unit.VictoryAnimation();
-            BattleManager.Instance.PlayEnemyWinSound();
-            StartCoroutine(ShowRewardOnDefeat());
+            SpinRewardSystem.Instance.ShowSpinPanel();
+            SpinRewardSystem.Instance.SetResultText("VICTORY!");
+        }
+        else
+        {
+            Debug.LogWarning("SpinRewardSystem is not assigned.");
         }
     }
-
-    public void CheckForPlayerVictory()
+    
+    private void ShowRewardOnDefeat()
     {
-        if (EnemyManager.Instance.AreAllEnemiesDead())
+        if (SpinRewardSystem.Instance != null)
         {
-            BattleManager.Instance.ResetCameraFOV();
-            unit.VictoryAnimation();
-            BattleManager.Instance.PlayPlayerWinSound();
-            StartCoroutine(ShowSpinAfterDelay(1f));
+            SpinRewardSystem.Instance.ShowRewardOnDefeat();
         }
-    }
-
-    private IEnumerator ShowSpinAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        SpinRewardSystem.Instance.ShowSpinPanel();
-        SpinRewardSystem.Instance.SetResultText("VICTORY!");
-    }
-
-    private IEnumerator ShowRewardOnDefeat()
-    {
-        yield return new WaitForSeconds(1f);
-        SpinRewardSystem.Instance.ShowRewardOnDefeat();
+        else
+        {
+            Debug.LogWarning("SpinRewardSystem is not assigned.");
+        }
     }
 }
