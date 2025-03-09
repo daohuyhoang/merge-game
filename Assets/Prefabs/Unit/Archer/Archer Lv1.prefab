@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3320766302282848128}
   - component: {fileID: 5309727229329783565}
   - component: {fileID: 4821770872165124467}
-  - component: {fileID: 7652232598250397426}
   m_Layer: 0
   m_Name: Archer Lv1
   m_TagString: Enemy
@@ -229,18 +228,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7652232598250397426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4857632772361676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e60d644f07a6684a854ed0ad081df47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &171839732830540165
 GameObject:
   m_ObjectHideFlags: 0

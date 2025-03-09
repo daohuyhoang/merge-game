@@ -624,7 +624,6 @@ GameObject:
   - component: {fileID: 4629485738153506110}
   - component: {fileID: 3945532005417460558}
   - component: {fileID: 2444921896193066482}
-  - component: {fileID: -8908929323130307196}
   - component: {fileID: 7503493967657560728}
   m_Layer: 0
   m_Name: Warrior Lv2
@@ -742,18 +741,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 47
---- !u!114 &-8908929323130307196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5701433430873092493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e60d644f07a6684a854ed0ad081df47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &7503493967657560728
 AudioSource:
   m_ObjectHideFlags: 0

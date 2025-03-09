@@ -43,7 +43,17 @@ public class EnemyManager : MonoBehaviour
             return true;
         }
 
-        return enemies.All(enemy => enemy != null && enemy.UnitHealth != null && enemy.UnitHealth.HP <= 0);
+        foreach (Unit enemy in enemies)
+        {
+            if (enemy != null && enemy.gameObject.activeInHierarchy)
+            {
+                if (enemy.UnitHealth != null && enemy.UnitHealth.HP > 0 && !enemy.IsUnitDying(enemy))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public Unit GetFirstActiveEnemy()

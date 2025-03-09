@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections;
 
 public class BattleManager : MonoBehaviour
 {
@@ -84,41 +85,76 @@ public class BattleManager : MonoBehaviour
 
         if (allEnemiesDead)
         {
+            isBattleActive = false;
             HandlePlayerVictory();
         }
         else if (allUnitsInactive)
         {
+            isBattleActive = false;
             HandleEnemyVictory();
         }
     }
     
     public void HandlePlayerVictory()
     {
-        var winner = ObjectPool.Instance.GetFirstActiveUnit();
-        if (winner != null)
+        ResetCameraFOV();
+        PlayPlayerWinSound();
+
+        Unit[] activeUnits = FindObjectsOfType<Unit>();
+        foreach (Unit activeUnit in activeUnits)
         {
-            winner.GetComponent<CheckVictory>().ShowPlayerVictory();
+            if (activeUnit.UnitHealth.HP > 0)
+            {
+                activeUnit.VictoryAnimation();
+            }
+        }
+
+        StartCoroutine(ShowSpinWithDelay());
+    }
+
+    private IEnumerator ShowSpinWithDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (SpinRewardSystem.Instance != null)
+        {
+            SpinRewardSystem.Instance.ShowSpinPanel();
+            SpinRewardSystem.Instance.SetResultText("VICTORY!");
         }
         else
         {
-            ResetCameraFOV();
-            // PlayPlayerWinSound();
-            SpinRewardSystem.Instance.ShowSpinPanel();
+            Debug.LogWarning("SpinRewardSystem.Instance is null!");
         }
     }
 
     public void HandleEnemyVictory()
     {
-        var winner = EnemyManager.Instance.GetFirstActiveEnemy();
-        if (winner != null)
+        ResetCameraFOV();
+        PlayEnemyWinSound();
+
+        Unit[] activeUnits = FindObjectsOfType<Unit>();
+        foreach (Unit activeUnit in activeUnits)
         {
-            winner.GetComponent<CheckVictory>().ShowEnemyVictory();
+            if (activeUnit.UnitHealth.HP > 0)
+            {
+                activeUnit.VictoryAnimation();
+            }
+        }
+
+        StartCoroutine(ShowRewardOnDefeatWithDelay());
+    }
+
+    private IEnumerator ShowRewardOnDefeatWithDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (SpinRewardSystem.Instance != null)
+        {
+            SpinRewardSystem.Instance.ShowRewardOnDefeat();
         }
         else
         {
-            ResetCameraFOV();
-            // PlayEnemyWinSound();
-            SpinRewardSystem.Instance.ShowRewardOnDefeat();
+            Debug.LogWarning("SpinRewardSystem.Instance is null!");
         }
     }
 }

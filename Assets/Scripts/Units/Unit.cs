@@ -32,7 +32,6 @@ public class Unit : MonoBehaviour
     private Unit targetUnit;
     private bool isAttacking = false;
     private Animator animator;
-    private CheckVictory checkVictory;
     private int totalDamageDealt;
 
     [SerializeField] private Transform positionArcherHitEffect;
@@ -46,7 +45,6 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         UnitHealth = GetComponent<UnitHealth>();
-        checkVictory = GetComponent<CheckVictory>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -65,16 +63,23 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
+        if (UnitHealth.HP <= 0) return;
+
         if (BattleManager.Instance != null && BattleManager.Instance.IsBattleActive())
         {
             FindTarget();
-            if (unitType == UnitTypeEnum.Warrior)
+            if (targetUnit == null)
+            {
+                animator.SetBool("Run", false);
+                animator.SetBool("Attack", false);
+            }
+            else if (unitType == UnitTypeEnum.Warrior)
             {
                 MoveTowardsTarget();
             }
             else if (unitType == UnitTypeEnum.Archer)
             {
-                if (targetUnit != null && Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
+                if (Vector3.Distance(transform.position, targetUnit.transform.position) <= attackRange)
                 {
                     Attack();
                 }
@@ -117,7 +122,9 @@ public class Unit : MonoBehaviour
 
         foreach (Unit unit in allUnits)
         {
-            if (unit == this || unit.CompareTag(gameObject.tag) || unit.UnitHealth.HP <= 0) continue;
+            if (unit == this || unit.CompareTag(gameObject.tag) || unit.UnitHealth.HP <= 0 || IsUnitDying(unit))
+                continue;
+
             float distance = Vector3.Distance(transform.position, unit.transform.position);
             if (distance < shortestDistance)
             {
@@ -125,8 +132,9 @@ public class Unit : MonoBehaviour
                 nearestUnit = unit;
             }
         }
-        
-        if (targetUnit != null && targetUnit.UnitHealth.HP <= 0) targetUnit = null;
+
+        if (targetUnit != null && (targetUnit.UnitHealth.HP <= 0 || IsUnitDying(targetUnit)))
+            targetUnit = null;
 
         if (nearestUnit != null && (targetUnit == null || shortestDistance < Vector3.Distance(transform.position, targetUnit.transform.position)))
         {
@@ -136,7 +144,14 @@ public class Unit : MonoBehaviour
 
     public void MoveTowardsTarget()
     {
-        if (targetUnit == null || isAttacking) return;
+        if (targetUnit == null || targetUnit.UnitHealth.HP <= 0  || IsUnitDying(targetUnit))
+        {
+            targetUnit = null;
+            animator.SetBool("Run", false);
+            animator.SetBool("Attack", false);
+            return;
+        }
+        
         float distanceToTarget = Vector3.Distance(transform.position, targetUnit.transform.position);
 
         if (distanceToTarget <= attackRange)
@@ -157,7 +172,7 @@ public class Unit : MonoBehaviour
 
     public void Attack()
     {
-        if (targetUnit == null || targetUnit.UnitHealth.HP <= 0 || isAttacking) return;
+        if (targetUnit == null || targetUnit.UnitHealth.HP <= 0 || isAttacking || IsUnitDying(targetUnit)) return;
         isAttacking = true;
 
         LookAtTarget();
@@ -238,6 +253,14 @@ public class Unit : MonoBehaviour
 
     public void OnUnitDied()
     {
+        BattleManager.Instance.CheckVictory();
+        StartCoroutine(DeathSequence());
+    }
+
+    private IEnumerator DeathSequence()
+    {
+        yield return new WaitForSeconds(3f);
+        
         if (CurrentTile != null)
         {
             CurrentTile.SetUnit(null);
@@ -251,11 +274,16 @@ public class Unit : MonoBehaviour
         
         ObjectPool.Instance.ReturnToPool(UnitType, gameObject);
         this.enabled = false;
-        BattleManager.Instance.CheckVictory();
     }
     
     public void VictoryAnimation()
     {
         if (animator != null) animator.SetTrigger("Victory");
+    }
+    
+    public bool IsUnitDying(Unit unit)
+    {
+        Animator unitAnimator = unit.GetComponent<Animator>();
+        return unitAnimator != null && unitAnimator.GetCurrentAnimatorStateInfo(0).IsName("Die");
     }
 }

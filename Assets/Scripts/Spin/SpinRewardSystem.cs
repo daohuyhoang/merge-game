@@ -90,7 +90,9 @@ public class SpinRewardSystem : MonoBehaviour
 
         while (elapsedTime < spinDuration)
         {
-            float zRotation = Mathf.Lerp(0, targetAngle, elapsedTime / spinDuration);
+            float t = elapsedTime / spinDuration;
+            float smoothT = t * t * (3f - 2f * t);
+            float zRotation = Mathf.Lerp(0, targetAngle, smoothT);
             spinWheel.rotation = Quaternion.Euler(0, 0, zRotation);
             elapsedTime += Time.deltaTime;
             yield return null;

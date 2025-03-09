@@ -323,7 +323,6 @@ GameObject:
   - component: {fileID: -9149575630307436961}
   - component: {fileID: -7786291280799998729}
   - component: {fileID: -105574770710554734}
-  - component: {fileID: -1778545375669915640}
   - component: {fileID: 3626831459749247142}
   m_Layer: 0
   m_Name: Archer Lv3
@@ -442,18 +441,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 52
---- !u!114 &-1778545375669915640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 880369612494016691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e60d644f07a6684a854ed0ad081df47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &3626831459749247142
 AudioSource:
   m_ObjectHideFlags: 0

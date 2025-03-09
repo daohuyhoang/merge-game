@@ -77,9 +77,19 @@ public class ObjectPool : MonoBehaviour
     {
         foreach (var pool in poolDictionary.Values)
         {
-            if (pool.Any(obj => obj.activeInHierarchy))
+            foreach (var obj in pool)
             {
-                return false;
+                if (obj.activeInHierarchy)
+                {
+                    Unit unit = obj.GetComponent<Unit>();
+                    if (unit != null)
+                    {
+                        if (unit.UnitHealth.HP > 0 && !unit.IsUnitDying(unit))
+                        {
+                            return false;
+                        }
+                    }
+                }
             }
         }
         return true;
