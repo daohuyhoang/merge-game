@@ -13,8 +13,8 @@ public class SpinRewardSystem : MonoBehaviour
     [SerializeField] private TMP_Text resultText;
     [SerializeField] private Transform spinWheel;
 
-    private float[] rewardAngles = { 0f, 179.993f, 45f, 224.993f, 90f, 269.993f, 134.993f, 314.993f };
-    private int[] multipliers = { 2, 2, 3, 3, 4, 4, 5, 5 };
+    private float[] rewardAngles = { 0f, 45f, 90, 134.993f, 179.993f, 224.993f, 269.993f, 314.993f };
+    private int[] multipliers = { 2, 3, 4, 5, 2, 3, 4, 5 };
 
     private int totalDamageDealt;
     private int rewardMultiplier;
@@ -41,6 +41,7 @@ public class SpinRewardSystem : MonoBehaviour
         spinButton.onClick.AddListener(StartSpin);
         continueButton.onClick.AddListener(OnContinueButtonClicked);
         continueButton.gameObject.SetActive(false);
+        spinWheel.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void AddToTotalDamageDealt(int damageDealt)
@@ -75,6 +76,7 @@ public class SpinRewardSystem : MonoBehaviour
         {
             isSpinning = true;
             spinButton.interactable = false;
+            spinWheel.rotation = Quaternion.Euler(0, 0, 0);
             StartCoroutine(SpinWheel());
         }
     }
@@ -82,34 +84,51 @@ public class SpinRewardSystem : MonoBehaviour
     private IEnumerator SpinWheel()
     {
         float spinDuration = 3f;
-        float elapsedTime = 0f;
+        float initialSpeed = 1080f;
+        float currentAngle = 0f;
 
-        int randomIndex = Random.Range(0, multipliers.Length);
-        rewardMultiplier = multipliers[randomIndex];
-        float targetAngle = rewardAngles[randomIndex] + 360 * 4;
+        int randomIndex = Random.Range(0, rewardAngles.Length);
+        float targetAngle = -rewardAngles[randomIndex] + 360f * Random.Range(3, 6);
+        float finalDisplayAngle = -rewardAngles[randomIndex];
+
+        float elapsedTime = 0f;
 
         while (elapsedTime < spinDuration)
         {
-            float t = elapsedTime / spinDuration;
-            float smoothT = t * t * (3f - 2f * t);
-            float zRotation = Mathf.Lerp(0, targetAngle, smoothT);
-            spinWheel.rotation = Quaternion.Euler(0, 0, zRotation);
             elapsedTime += Time.deltaTime;
+            float t = elapsedTime / spinDuration;
+            float speed = initialSpeed * (1f - t * t);
+            float angleDelta = speed * Time.deltaTime;
+            currentAngle += angleDelta;
+
+            spinWheel.rotation = Quaternion.Euler(0, 0, currentAngle);
+
+            if (currentAngle >= targetAngle - 360f)
+            {
+                float remainingAngle = targetAngle - currentAngle;
+                if (remainingAngle > 0)
+                {
+                    angleDelta = Mathf.Min(angleDelta, remainingAngle);
+                    currentAngle += angleDelta;
+                    spinWheel.rotation = Quaternion.Euler(0, 0, currentAngle);
+                }
+            }
+
             yield return null;
         }
 
-        spinWheel.rotation = Quaternion.Euler(0, 0, targetAngle % 360);
+        spinWheel.rotation = Quaternion.Euler(0, 0, finalDisplayAngle);
+        rewardMultiplier = multipliers[randomIndex];
+        Debug.Log($"Multiplier: {rewardMultiplier}");
         ShowReward();
     }
+
 
     private void ShowReward()
     {
         reward = totalDamageDealt * rewardMultiplier;
-
         rewardText.text = $"YOU EARNED: +{reward}";
-
         continueButton.gameObject.SetActive(true);
-
         isSpinning = false;
         isWin = true;
     }

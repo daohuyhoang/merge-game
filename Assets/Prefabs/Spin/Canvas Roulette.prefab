@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_text
       value: x5
       objectReference: {fileID: 0}
+    - target: {fileID: 2322576566718704786, guid: 2dc3caff56a66544a99886891b89de47,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3217671982645100069, guid: 2dc3caff56a66544a99886891b89de47,
         type: 3}
       propertyPath: m_text
@@ -163,6 +168,11 @@ PrefabInstance:
     - target: {fileID: 3436429637289165523, guid: 2dc3caff56a66544a99886891b89de47,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3871993638602164373, guid: 2dc3caff56a66544a99886891b89de47,
+        type: 3}
+      propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3871993638602164373, guid: 2dc3caff56a66544a99886891b89de47,
@@ -690,6 +700,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908472336420266116, guid: 11ff69deaa6f6924bb1ef33ddd4fbbb9,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8908472336420266116, guid: 11ff69deaa6f6924bb1ef33ddd4fbbb9,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

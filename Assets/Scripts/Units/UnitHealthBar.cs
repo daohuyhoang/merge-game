@@ -54,6 +54,7 @@ public class UnitHealthBar : MonoBehaviour
         {
             float healthPercentage = (float)unitHealth.HP / unitHealth.MaxHP;
             healthSlider.value = healthPercentage;
+            healthSlider.gameObject.SetActive(unitHealth.HP > 0);
         }
     }
 
