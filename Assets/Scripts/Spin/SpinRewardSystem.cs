@@ -89,7 +89,6 @@ public class SpinRewardSystem : MonoBehaviour
 
         int randomIndex = Random.Range(0, rewardAngles.Length);
         float targetAngle = -rewardAngles[randomIndex] + 360f * Random.Range(3, 6);
-        float finalDisplayAngle = -rewardAngles[randomIndex];
 
         float elapsedTime = 0f;
 
@@ -97,27 +96,22 @@ public class SpinRewardSystem : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / spinDuration;
-            float speed = initialSpeed * (1f - t * t);
+            float speed = initialSpeed * Mathf.Pow(1f - t, 2f);
             float angleDelta = speed * Time.deltaTime;
             currentAngle += angleDelta;
 
             spinWheel.rotation = Quaternion.Euler(0, 0, currentAngle);
 
-            if (currentAngle >= targetAngle - 360f)
+            if (currentAngle >= targetAngle)
             {
-                float remainingAngle = targetAngle - currentAngle;
-                if (remainingAngle > 0)
-                {
-                    angleDelta = Mathf.Min(angleDelta, remainingAngle);
-                    currentAngle += angleDelta;
-                    spinWheel.rotation = Quaternion.Euler(0, 0, currentAngle);
-                }
+                currentAngle = targetAngle;
+                spinWheel.rotation = Quaternion.Euler(0, 0, currentAngle);
+                break;
             }
 
             yield return null;
         }
 
-        spinWheel.rotation = Quaternion.Euler(0, 0, finalDisplayAngle);
         rewardMultiplier = multipliers[randomIndex];
         Debug.Log($"Multiplier: {rewardMultiplier}");
         ShowReward();
