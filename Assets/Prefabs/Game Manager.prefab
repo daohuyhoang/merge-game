@@ -48,6 +48,10 @@ MonoBehaviour:
   mergeEffectPrefab: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb,
     type: 3}
   mergeSound: {fileID: 8300000, guid: 4e1ff8faed12a475eba9be0e46072269, type: 3}
+  mergeUICard: {fileID: 5530235219943884475, guid: 41c2a446d170f1d4ebf2e9882b03f96b,
+    type: 3}
+  uiCanvas: {fileID: 1945398346818171452, guid: 41c2a446d170f1d4ebf2e9882b03f96b,
+    type: 3}
 --- !u!82 &8101001051072505701
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1,21 +1,28 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UnitMergeHandler : MonoBehaviour
 {
-    public static UnitMergeHandler Instance;
+    public static UnitMergeHandler Instance { get; private set; }
 
     [SerializeField] GameObject mergeEffectPrefab;
     [SerializeField] private AudioClip mergeSound;
     [SerializeField] private UnitMergeUICard mergeUICard;
     [SerializeField] private Canvas uiCanvas;
 
+    private Dictionary<Unit.UnitTypeEnum, int> highestMergedLevel = new Dictionary<Unit.UnitTypeEnum, int>();
+    
     private string TEAM_TAG = "Player";
     private AudioSource audioSource;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else Destroy(gameObject);
 
         audioSource = GetComponent<AudioSource>();
@@ -48,7 +55,19 @@ public class UnitMergeHandler : MonoBehaviour
             newUnit.UnitLevel = newLevel;
             newUnit.tag = TEAM_TAG;
             newUnit.UpdateStats();
-            DisplayMergeUI(newUnit);
+            Unit.UnitTypeEnum type = newUnit.UnitType;
+            
+            if (!highestMergedLevel.ContainsKey(type))
+            {
+                highestMergedLevel[type] = 0;
+            }
+
+            if (newLevel > highestMergedLevel[type])
+            {
+                highestMergedLevel[type] = newLevel;
+                DisplayMergeUI(newUnit);
+            }
+            
             UnitHealthBar healthBar = newUnit.GetComponentInChildren<UnitHealthBar>();
             healthBar.SetHealthBarColor();
             newUnit.CurrentTile = unitB.CurrentTile;
@@ -121,7 +140,9 @@ public class UnitMergeHandler : MonoBehaviour
             cardInstance.DisplayUnitInfo(
                 unitSprite,
                 mergedUnit.UnitHealth.HP,
-                mergedUnit.ATK
+                mergedUnit.ATK,
+                mergedUnit.UnitType.ToString(),
+                mergedUnit.UnitLevel
             );
         }
         else
