@@ -13,14 +13,20 @@ public class SpinRewardSystem : MonoBehaviour
     [SerializeField] private TMP_Text resultText;
     [SerializeField] private Transform spinWheel;
 
-    private float[] rewardAngles = { 0f, 45f, 90, 134.993f, 179.993f, 224.993f, 269.993f, 314.993f };
-    private int[] multipliers = { 2, 3, 4, 5, 2, 3, 4, 5 };
+    [SerializeField] private float stopPower = 100f;
 
+    private Rigidbody2D rbody;
+    private int inRotate = 0;
+    private float t;
+    private float rotatePower;
+
+    private int[] multipliers = { 2, 5, 4, 3, 2, 5, 4, 3 };
     private int totalDamageDealt;
     private int rewardMultiplier;
     private bool isSpinning = false;
     private int reward;
     private bool isWin = false;
+    private bool hasSpun = false;
 
     public static SpinRewardSystem Instance { get; private set; }
 
@@ -38,10 +44,38 @@ public class SpinRewardSystem : MonoBehaviour
 
     private void Start()
     {
+        rbody = spinWheel.GetComponent<Rigidbody2D>();
+        if (rbody == null)
+        {
+            Debug.LogError("SpinWheel cần có Rigidbody2D!");
+        }
+
         spinButton.onClick.AddListener(StartSpin);
         continueButton.onClick.AddListener(OnContinueButtonClicked);
         continueButton.gameObject.SetActive(false);
         spinWheel.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void Update()
+    {
+        if (rbody.angularVelocity > 0)
+        {
+            rbody.angularVelocity -= stopPower * Time.deltaTime;
+            rbody.angularVelocity = Mathf.Clamp(rbody.angularVelocity, 0, 1440);
+        }
+
+        if (rbody.angularVelocity == 0 && inRotate == 1)
+        {
+            t += Time.deltaTime;
+            if (t >= 0.5f)
+            {
+                GetReward();
+                inRotate = 0;
+                t = 0;
+                isSpinning = false;
+                ShowReward();
+            }
+        }
     }
 
     public void AddToTotalDamageDealt(int damageDealt)
@@ -72,51 +106,31 @@ public class SpinRewardSystem : MonoBehaviour
 
     private void StartSpin()
     {
-        if (!isSpinning)
+        if (!isSpinning && !hasSpun)
         {
             isSpinning = true;
+            inRotate = 1;
             spinButton.interactable = false;
             spinWheel.rotation = Quaternion.Euler(0, 0, 0);
-            StartCoroutine(SpinWheel());
+            rbody.angularVelocity = 0;
+            rotatePower = Random.Range(400f, 600f);
+            rbody.AddTorque(rotatePower);
+            hasSpun = true;
+            Debug.Log("Rotate Power: " + rotatePower);
         }
     }
 
-    private IEnumerator SpinWheel()
+    private void GetReward()
     {
-        float spinDuration = 3f;
-        float initialSpeed = 1080f;
-        float currentAngle = 0f;
+        float rot = spinWheel.eulerAngles.z;
+        float normalizedRot = (rot + 360f) % 360f;
+        float adjustedRot = (normalizedRot + 22.5f) % 360f;
 
-        int randomIndex = Random.Range(0, rewardAngles.Length);
-        float targetAngle = -rewardAngles[randomIndex] + 360f * Random.Range(3, 6);
+        int index = Mathf.FloorToInt(adjustedRot / 45f) % multipliers.Length;
+        rewardMultiplier = multipliers[index];
 
-        float elapsedTime = 0f;
-
-        while (elapsedTime < spinDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / spinDuration;
-            float speed = initialSpeed * Mathf.Pow(1f - t, 2f);
-            float angleDelta = speed * Time.deltaTime;
-            currentAngle += angleDelta;
-
-            spinWheel.rotation = Quaternion.Euler(0, 0, currentAngle);
-
-            if (currentAngle >= targetAngle)
-            {
-                currentAngle = targetAngle;
-                spinWheel.rotation = Quaternion.Euler(0, 0, currentAngle);
-                break;
-            }
-
-            yield return null;
-        }
-
-        rewardMultiplier = multipliers[randomIndex];
-        Debug.Log($"Multiplier: {rewardMultiplier}");
-        ShowReward();
+        Debug.Log($"Final Angle: {normalizedRot}, Multiplier: {rewardMultiplier}");
     }
-
 
     private void ShowReward()
     {
@@ -147,7 +161,7 @@ public class SpinRewardSystem : MonoBehaviour
     {
         spinPanel.SetActive(false);
         continueButton.gameObject.SetActive(false);
-        spinButton.interactable = true;
+        spinButton.interactable = false;
         spinButton.gameObject.SetActive(true);
         totalDamageDealt = 0;
     }
@@ -155,7 +169,6 @@ public class SpinRewardSystem : MonoBehaviour
     private void LoadNextScene()
     {
         LevelManager.Instance.IncreaseLevel();
-
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
 
