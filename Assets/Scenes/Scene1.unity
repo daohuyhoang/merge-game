@@ -2934,6 +2934,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4945366200281217223, guid: 9506d389d7857f440b256a55bb0359ce,
+        type: 3}
+      propertyPath: uiCanvas
+      value: 
+      objectReference: {fileID: 1945398346818171452, guid: 41c2a446d170f1d4ebf2e9882b03f96b,
+        type: 3}
+    - target: {fileID: 4945366200281217223, guid: 9506d389d7857f440b256a55bb0359ce,
+        type: 3}
+      propertyPath: mergeUICard
+      value: 
+      objectReference: {fileID: 5530235219943884475, guid: 41c2a446d170f1d4ebf2e9882b03f96b,
+        type: 3}
     - target: {fileID: 8462495089589273604, guid: 9506d389d7857f440b256a55bb0359ce,
         type: 3}
       propertyPath: m_LocalPosition.x

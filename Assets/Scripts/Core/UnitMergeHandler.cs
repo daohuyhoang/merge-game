@@ -7,6 +7,8 @@ public class UnitMergeHandler : MonoBehaviour
 
     [SerializeField] GameObject mergeEffectPrefab;
     [SerializeField] private AudioClip mergeSound;
+    [SerializeField] private UnitMergeUICard mergeUICard;
+    [SerializeField] private Canvas uiCanvas;
 
     private string TEAM_TAG = "Player";
     private AudioSource audioSource;
@@ -46,6 +48,7 @@ public class UnitMergeHandler : MonoBehaviour
             newUnit.UnitLevel = newLevel;
             newUnit.tag = TEAM_TAG;
             newUnit.UpdateStats();
+            DisplayMergeUI(newUnit);
             UnitHealthBar healthBar = newUnit.GetComponentInChildren<UnitHealthBar>();
             healthBar.SetHealthBarColor();
             newUnit.CurrentTile = unitB.CurrentTile;
@@ -103,5 +106,27 @@ public class UnitMergeHandler : MonoBehaviour
         }
 
         targetTransform.localScale = endScale;
+    }
+    
+    private void DisplayMergeUI(Unit mergedUnit)
+    {
+        if (mergeUICard != null && uiCanvas != null)
+        {
+            Sprite unitSprite = mergedUnit.UnitData.spritesByLevel[mergedUnit.UnitLevel - 1];
+            UnitMergeUICard cardInstance = Instantiate(mergeUICard);
+
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(mergedUnit.transform.position);
+            cardInstance.transform.position = screenPos;
+
+            cardInstance.DisplayUnitInfo(
+                unitSprite,
+                mergedUnit.UnitHealth.HP,
+                mergedUnit.ATK
+            );
+        }
+        else
+        {
+            Debug.LogError("mergeUICard or uiCanvas is null!");
+        }
     }
 }

@@ -7,4 +7,5 @@ public class UnitData : ScriptableObject
     public int maxLevel;
     public int[] hpByLevel;
     public int[] atkByLevel;
+    public Sprite[] spritesByLevel;
 }
