@@ -8,11 +8,12 @@ public class UnitMergeUICard : MonoBehaviour
     [SerializeField] private TMP_Text hpText;
     [SerializeField] private TMP_Text damageText;
     [SerializeField] private TMP_Text text;
-    [SerializeField] private float displayDuration = 2f;
+    [SerializeField] private Button continueButton;
 
     private void Awake()
     {
         gameObject.SetActive(false);
+        continueButton.onClick.AddListener(Hide);
     }
 
     public void DisplayUnitInfo(Sprite unitSprite, int hp, int damage, string unitType, int unitLevel)
@@ -23,7 +24,6 @@ public class UnitMergeUICard : MonoBehaviour
         text.text = $"{unitType} Level {unitLevel}";
         
         gameObject.SetActive(true);
-        Invoke(nameof(Hide), displayDuration);
     }
 
     private void Hide()

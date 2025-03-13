@@ -119,6 +119,9 @@ public class GridSystem : MonoBehaviour
 
         warriorCostText.text = warriorCost == 0 ? "0" : $"{CoinManager.Instance.FormatCoin(warriorCost)}";
         archerCostText.text = archerCost == 0 ? "0" : $"{CoinManager.Instance.FormatCoin(archerCost)}";
+
+        warriorButton.interactable = CoinManager.Instance.GetTotalCoin() >= warriorCost;
+        archerButton.interactable = CoinManager.Instance.GetTotalCoin() >= archerCost;
     }
 
     private void PlayButtonSound(Unit.UnitTypeEnum unitType)

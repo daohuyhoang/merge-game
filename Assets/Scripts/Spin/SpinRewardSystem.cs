@@ -47,7 +47,7 @@ public class SpinRewardSystem : MonoBehaviour
         rbody = spinWheel.GetComponent<Rigidbody2D>();
         if (rbody == null)
         {
-            Debug.LogError("SpinWheel cần có Rigidbody2D!");
+            Debug.LogError("SpinWheel need Rigidbody2D!");
         }
 
         spinButton.onClick.AddListener(StartSpin);
